@@ -34,7 +34,6 @@ public class MainController implements Initializable {
 
 	/**
 	 * Receive Morse code.
-	 * @param event event
 	 */
 	public void receive(ActionEvent event) {
 		MorseString.receive(txt_input.getText());
@@ -43,7 +42,6 @@ public class MainController implements Initializable {
 
 	/**
 	 * Transmit Morse code.
-	 * @param event event
 	 * @throws LineUnavailableException caused by sound(...) method
 	 * @throws InterruptedException caused by Thread.Sleep(...)
 	 */
@@ -54,7 +52,6 @@ public class MainController implements Initializable {
 
 	/**
 	 * Perform knowledge training of Morse.
-	 * @param event event
 	 * @throws LineUnavailableException caused by sound(...) method
 	 * @throws InterruptedException caused by Thread.Sleep(...)
 	 */
@@ -76,10 +73,9 @@ public class MainController implements Initializable {
 
 	/**
 	 * Allow user to modify application properties.
-	 * @param event event
 	 * @throws IOException caused by getClass().getResource(...)
 	 */
-	public void changeProperties(ActionEvent event) throws IOException {
+	public void changeProperties() throws IOException {
 		Stage stage = new Stage();
 		Parent root = FXMLLoader.load(getClass().getResource("../../../../../view/Properties.fxml"));
 		stage.setTitle("Properties");
@@ -91,7 +87,7 @@ public class MainController implements Initializable {
 	 * Get application settings.
 	 * @return settings
 	 */
-	public static MorseSettings getSettings() {
+	static MorseSettings getSettings() {
 		return settings;
 	}
 
@@ -99,8 +95,15 @@ public class MainController implements Initializable {
 	 * Save application settings.
 	 * @param _settings settings
 	 */
-	public static void setSettings(MorseSettings _settings) {
+	static void setSettings(MorseSettings _settings) {
 		settings = _settings;
+	}
+
+	/**
+	 * Apply application settings.
+	 */
+	static void applySettings() {
+		MorseString.setSettings(settings);
 	}
 
 	@FXML public MenuItem btn_transmit;

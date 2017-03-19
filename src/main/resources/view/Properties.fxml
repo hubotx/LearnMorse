@@ -2,30 +2,39 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="265.0" prefWidth="480.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.hubot.dev.learn_morse.controller.PropertiesController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="348.0" prefWidth="480.0" styleClass="background" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.hubot.dev.learn_morse.controller.PropertiesController">
    <children>
-      <Button fx:id="closeButton" layoutX="403.0" layoutY="231.0" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
-      <Button layoutX="359.0" layoutY="231.0" mnemonicParsing="false" onAction="#ok" text="OK" />
-      <Label layoutX="12.0" layoutY="19.0" text="Pause before keying:" />
-      <Slider fx:id="lengthOfSpaceBetweenCharElements" blockIncrement="1.0" layoutX="326.0" layoutY="162.0" max="20.0" />
-      <Label layoutX="12.0" layoutY="43.0" text="Keying speed:" />
-      <Label layoutX="12.0" layoutY="67.0" prefHeight="16.0" prefWidth="73.0" text="Dit length:" />
-      <Label layoutX="12.0" layoutY="92.0" prefHeight="16.0" prefWidth="80.0" text="Dah length:" />
-      <Label layoutX="12.0" layoutY="116.0" prefHeight="16.0" prefWidth="274.0" text="Length of space between two characters:" />
-      <Label layoutX="12.0" layoutY="139.0" prefHeight="16.0" prefWidth="244.0" text="Length of space between two words:" />
-      <Label layoutX="12.0" layoutY="162.0" text="Length of space between char elements:" />
-      <Label layoutX="12.0" layoutY="186.0" text="Frequency:" />
-      <Label layoutX="12.0" layoutY="210.0" text="Volume:" />
-      <Slider fx:id="lengthOfSpaceBetweenWords" blockIncrement="1.0" layoutX="326.0" layoutY="139.0" max="20.0" />
-      <Slider fx:id="lengthOfSpaceBetweenCharacters" blockIncrement="1.0" layoutX="326.0" layoutY="116.0" max="20.0" />
-      <Slider fx:id="dahLength" blockIncrement="1.0" layoutX="326.0" layoutY="92.0" max="20.0" />
-      <Slider fx:id="ditLength" blockIncrement="1.0" layoutX="326.0" layoutY="67.0" max="20.0" />
-      <Slider fx:id="keyingSpeed" blockIncrement="1.0" layoutX="326.0" layoutY="43.0" max="200.0" />
-      <Slider fx:id="pauseBeforeKeying" blockIncrement="1.0" layoutX="326.0" layoutY="19.0" max="20.0" />
-      <Slider fx:id="frequency" layoutX="326.0" layoutY="186.0" max="20000.0" />
-      <Slider fx:id="volume" blockIncrement="0.01" layoutX="326.0" layoutY="210.0" max="1.0" />
+      <Button fx:id="closeButton" layoutX="266.0" layoutY="306.0" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
+      <Button layoutX="370.0" layoutY="306.0" mnemonicParsing="false" onAction="#ok" prefHeight="33.0" prefWidth="98.0" text="OK" />
+      <Label layoutX="14.0" layoutY="19.0" text="Pause before keying:" />
+      <Label layoutX="15.0" layoutY="52.0" text="Keying speed:" />
+      <Label layoutX="15.0" layoutY="84.0" prefHeight="16.0" prefWidth="73.0" text="Dit length:" />
+      <Label layoutX="14.0" layoutY="117.0" prefHeight="16.0" prefWidth="80.0" text="Dah length:" />
+      <Label layoutX="14.0" layoutY="149.0" prefHeight="16.0" prefWidth="274.0" text="Length of space between two characters:" />
+      <Label layoutX="15.0" layoutY="180.0" prefHeight="16.0" prefWidth="244.0" text="Length of space between two words:" />
+      <Label layoutX="14.0" layoutY="211.0" text="Length of space between char elements:" />
+      <Label layoutX="14.0" layoutY="240.0" prefHeight="16.0" prefWidth="73.0" text="Frequency:" />
+      <Label layoutX="15.0" layoutY="270.0" text="Volume:" />
+      <TextField fx:id="pauseBeforeKeying" layoutX="295.0" layoutY="14.0" prefHeight="26.0" prefWidth="54.0" />
+      <TextField fx:id="keyingSpeed" layoutX="295.0" layoutY="47.0" prefHeight="26.0" prefWidth="54.0" />
+      <TextField fx:id="ditLength" layoutX="295.0" layoutY="79.0" prefHeight="26.0" prefWidth="54.0" />
+      <TextField fx:id="dahLength" layoutX="295.0" layoutY="112.0" prefHeight="26.0" prefWidth="54.0" />
+      <TextField fx:id="lengthOfSpaceBetweenCharacters" layoutX="295.0" layoutY="144.0" prefHeight="26.0" prefWidth="54.0" />
+      <TextField fx:id="lengthOfSpaceBetweenWords" layoutX="295.0" layoutY="175.0" prefHeight="26.0" prefWidth="54.0" />
+      <TextField fx:id="lengthOfSpaceBetweenCharElements" layoutX="295.0" layoutY="206.0" prefHeight="26.0" prefWidth="54.0" />
+      <TextField fx:id="frequency" layoutX="295.0" layoutY="238.0" prefHeight="26.0" prefWidth="54.0" />
+      <TextField fx:id="volume" layoutX="295.0" layoutY="270.0" prefHeight="26.0" prefWidth="54.0" />
+      <Label layoutX="354.0" layoutY="19.0" text="seconds" />
+      <Label layoutX="354.0" layoutY="52.0" text="words per minute" />
+      <Label layoutX="356.0" layoutY="84.0" text="milliseconds" />
+      <Label layoutX="356.0" layoutY="117.0" text="milliseconds" />
+      <Label layoutX="356.0" layoutY="149.0" text="dots" />
+      <Label layoutX="356.0" layoutY="180.0" text="dots" />
+      <Label layoutX="356.0" layoutY="211.0" text="dots" />
+      <Label layoutX="356.0" layoutY="243.0" text="Hz" />
+      <Label layoutX="356.0" layoutY="275.0" text="\%" />
    </children>
 </AnchorPane>

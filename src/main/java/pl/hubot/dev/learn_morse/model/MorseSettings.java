@@ -14,6 +14,7 @@ public class MorseSettings {
 		this.dahLength = 3 * this.ditLength;
 		this.lengthOfSpaceBetweenCharacters = 3 * this.ditLength;
 		this.lengthOfSpaceBetweenWords = 7 * this.ditLength;
+		this.lengthOfSpaceBetweenCharElements = this.ditLength;
 		this.frequency = 800;
 		this.volume = 0.1f;
 	}
@@ -30,6 +31,7 @@ public class MorseSettings {
 		this.dahLength = 3 * this.ditLength;
 		this.lengthOfSpaceBetweenCharacters = 3 * this.ditLength;
 		this.lengthOfSpaceBetweenWords = 7 * this.ditLength;
+		this.lengthOfSpaceBetweenCharElements = this.ditLength;
 		this.pauseBeforeKeying = pauseBeforeKeying;
 		this.frequency = frequency;
 		this.volume = 0.1f;
@@ -48,6 +50,7 @@ public class MorseSettings {
 		this.dahLength = 3 * this.ditLength;
 		this.lengthOfSpaceBetweenCharacters = 3 * this.ditLength;
 		this.lengthOfSpaceBetweenWords = 7 * this.ditLength;
+		this.lengthOfSpaceBetweenCharElements = this.ditLength;
 		this.pauseBeforeKeying = pauseBeforeKeying;
 		this.frequency = frequency;
 		this.volume = volume;
