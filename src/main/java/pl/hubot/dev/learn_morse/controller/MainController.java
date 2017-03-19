@@ -27,6 +27,7 @@ public class MainController implements Initializable {
 	 * @param location location
 	 * @param resources resources
 	 */
+	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		settings = new MorseSettings(2, 4, 800);
 		MorseString.setSettings(settings);
@@ -36,8 +37,10 @@ public class MainController implements Initializable {
 	 * Receive Morse code.
 	 */
 	public void receive(ActionEvent event) {
-		MorseString.receive(txt_input.getText());
-		txt_output.setText(MorseString.getDecoded());
+		new Thread(() -> {
+			MorseString.receive(txt_input.getText());
+			txt_output.setText(MorseString.getDecoded());
+		}).start();
 	}
 
 	/**
@@ -46,8 +49,14 @@ public class MainController implements Initializable {
 	 * @throws InterruptedException caused by Thread.Sleep(...)
 	 */
 	public void transmit(ActionEvent event) throws LineUnavailableException, InterruptedException {
-		MorseString.transmit(txt_input.getText());
-		txt_output.setText(MorseString.getEncoded());
+		new Thread(() -> {
+			try {
+				MorseString.transmit(txt_input.getText());
+			} catch (Exception ex) {
+
+			}
+			txt_output.setText(MorseString.getEncoded());
+		}).start();
 	}
 
 	/**
@@ -56,19 +65,26 @@ public class MainController implements Initializable {
 	 * @throws InterruptedException caused by Thread.Sleep(...)
 	 */
 	public void train(ActionEvent event) throws LineUnavailableException, InterruptedException {
-		char[] pool = new char[] { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
-									'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x',
-									'y', 'z' };
-		StringBuilder randomCharacters = new StringBuilder();
-		for (int i = 0; i < 5; i++) {
-			for (int j = 0; j < 4; j++) {
-				char curr = pool[new Random().nextInt(pool.length)];
-				randomCharacters.append(curr);
+		new Thread(() -> {
+			try {
+				char[] pool = new char[]{'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
+						'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x',
+						'y', 'z'};
+				StringBuilder randomCharacters = new StringBuilder();
+				for (int i = 0; i < 5; i++) {
+					for (int j = 0; j < 4; j++) {
+						char curr = pool[new Random().nextInt(pool.length)];
+						randomCharacters.append(curr);
+					}
+					randomCharacters.append(' ');
+				}
+				MorseString.transmit(randomCharacters.toString());
+				txt_output.setText(MorseString.getEncoded());
 			}
-			randomCharacters.append(' ');
-		}
-		MorseString.transmit(randomCharacters.toString());
-		txt_output.setText(MorseString.getEncoded());
+			catch (Exception ex) {
+
+			}
+		}).start();
 	}
 
 	/**
