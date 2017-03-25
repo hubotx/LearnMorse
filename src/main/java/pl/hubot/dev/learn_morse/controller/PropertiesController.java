@@ -10,13 +10,24 @@ import pl.hubot.dev.learn_morse.model.CharPool;
 import pl.hubot.dev.learn_morse.model.MorseSettings;
 
 import java.net.URL;
-import java.util.Arrays;
 import java.util.ResourceBundle;
 
 /**
  * Controller class for resource view/Properties.fxml.
  */
 public class PropertiesController implements Initializable {
+	@FXML private TextField pauseBeforeKeying;
+	@FXML private TextField keyingSpeed;
+	@FXML private TextField ditLength;
+	@FXML private TextField dahLength;
+	@FXML private TextField lengthOfSpaceBetweenCharacters;
+	@FXML private TextField lengthOfSpaceBetweenWords;
+	@FXML private TextField lengthOfSpaceBetweenCharElements;
+	@FXML private TextField frequency;
+	@FXML private TextField volume;
+	@FXML private ComboBox<String> charPool;
+	@FXML private Button closeButton;
+
 	/**
 	 * Initialize controller.
 	 * @param location location
@@ -75,37 +86,4 @@ public class PropertiesController implements Initializable {
 		// do what you have to do
 		stage.close();
 	}
-
-	@FXML
-	private TextField pauseBeforeKeying;
-
-	@FXML
-	private TextField keyingSpeed;
-
-	@FXML
-	private TextField ditLength;
-
-	@FXML
-	private TextField dahLength;
-
-	@FXML
-	private TextField lengthOfSpaceBetweenCharacters;
-
-	@FXML
-	private TextField lengthOfSpaceBetweenWords;
-
-	@FXML
-	private TextField lengthOfSpaceBetweenCharElements;
-
-	@FXML
-	private TextField frequency;
-
-	@FXML
-	private TextField volume;
-
-	@FXML
-	private ComboBox<String> charPool;
-
-	@FXML
-	private Button closeButton;
 }

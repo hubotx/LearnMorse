@@ -22,6 +22,9 @@ import java.util.ResourceBundle;
  * Controller class for resource view/Main.fxml.
  */
 public class MainController implements Initializable {
+	@FXML public TextArea txt_input;
+	@FXML public TextArea txt_output;
+
 	/**
 	 * Initialize controller.
 	 * @param location location
@@ -101,7 +104,4 @@ public class MainController implements Initializable {
 		stage.setScene(new Scene(root));
 		stage.show();
 	}
-
-	@FXML public TextArea txt_input;
-	@FXML public TextArea txt_output;
 }

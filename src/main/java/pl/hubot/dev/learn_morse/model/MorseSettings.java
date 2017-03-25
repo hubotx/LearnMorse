@@ -5,30 +5,19 @@ import pl.hubot.dev.learn_morse.ErrorHandler;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
 import java.util.Properties;
 
 /**
  * Class that represents basics settings of keyer.
  */
 public class MorseSettings {
-//	/**
-//	 * Constructor with default settings, used for debugging.
-//	 */
-//	public MorseSettings() {
-//		this.pauseBeforeKeying = 2;
-//		this.keyingSpeed = 20;
-//		this.ditLength = 1200 / keyingSpeed;
-//		this.dahLength = 3 * this.ditLength;
-//		this.lengthOfSpaceBetweenCharacters = 3 * this.ditLength;
-//		this.lengthOfSpaceBetweenWords = 7 * this.ditLength;
-//		this.lengthOfSpaceBetweenCharElements = this.ditLength;
-//		this.frequency = 800;
-//		this.volume = 0.1f;
-//		this.muted = false;
-//		this.pool = CharPool.englishSet;
-//	}
+	private static Properties prop = new Properties();
+	private static InputStream input = null;
 
+	/**
+	 * Load properties
+	 * @throws IOException if loading properties will fails
+	 */
 	public static void load() throws IOException {
 		String filename = "config.properties";
 		input = MorseSettings.class.getClassLoader().getResourceAsStream(filename);
@@ -44,6 +33,9 @@ public class MorseSettings {
 		prop.load(input);
 	}
 
+	/**
+	 * Close input stream.
+	 */
 	public static void unload() {
 		if (input != null){
 			try {
@@ -198,14 +190,19 @@ public class MorseSettings {
 		prop.setProperty("volume", Float.toString(volume));
 	}
 
+	/**
+	 * Get character pool.
+	 * @return pool
+	 */
 	public static char[] getPool() {
 		return prop.getProperty("pool").toCharArray();
 	}
 
+	/**
+	 * Set character pool.
+	 * @param pool character pool
+	 */
 	public static void setPool(char[] pool) {
 		prop.setProperty("pool", String.valueOf(pool));
 	}
-
-	private static Properties prop = new Properties();
-	private static InputStream input = null;
 }

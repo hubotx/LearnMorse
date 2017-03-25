@@ -1,7 +1,8 @@
 package pl.hubot.dev.learn_morse.model;
 
-import java.util.Arrays;
-
+/**
+ * Training character pool.
+ */
 public class CharPool {
 	public static final char[] englishSet = "abcdefghijklmnopqrstuvwxyz".toCharArray();
 	public static final char[] polishSet = (String.valueOf(englishSet) + "ąćęłńóśźż").toCharArray();

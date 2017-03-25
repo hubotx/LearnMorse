@@ -6,42 +6,10 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * Morse coder/decoder class.
+ */
 public class MorseCode {
-	public static String encode(String input) {
-		StringBuilder encoded = new StringBuilder();
-		String lowerCaseInput = input.toLowerCase();
-		for (int i = 0; i < lowerCaseInput.length(); i++) {
-			char current = lowerCaseInput.charAt(i);
-			encoded.append(morseCode.getOrDefault(Character.toString(current), " "));
-			encoded.append(" ");
-			if (current == ' ') {
-				encoded.append("       ");
-			} else {
-				encoded.append("   ");
-			}
-		}
-		return encoded.toString();
-	}
-
-	public static String decode(String input) {
-		StringBuilder decoded = new StringBuilder();
-		String lowerCaseInput = input.toLowerCase();
-		for (String current : lowerCaseInput.split(" ")) {
-			if (getKeysByValue(morseCode, current).toArray().length != 0)
-				decoded.append(getKeysByValue(morseCode, current).toArray()[0]);
-			decoded.append(" ");
-		}
-		return decoded.toString();
-	}
-
-	private static <T, E> Set<T> getKeysByValue(Map<T, E> map, E value) {
-		return map.entrySet()
-				.stream()
-				.filter(entry -> Objects.equals(entry.getValue(), value))
-				.map(Map.Entry::getKey)
-				.collect(Collectors.toSet());
-	}
-
 	static final Map<String, String> morseCode = new HashMap<String, String>() {{
 		put("a", "._");
 		put("b", "_...");
@@ -107,4 +75,57 @@ public class MorseCode {
 		put("=", "_..._");
 		put("@", ".__._.");
 	}};
+
+	/**
+	 * Encode input and return output Morse code.
+	 * @param input input
+	 * @return Morse code
+	 */
+	public static String encode(String input) {
+		StringBuilder encoded = new StringBuilder();
+		String lowerCaseInput = input.toLowerCase();
+		for (int i = 0; i < lowerCaseInput.length(); i++) {
+			char current = lowerCaseInput.charAt(i);
+			encoded.append(morseCode.getOrDefault(Character.toString(current), " "));
+			encoded.append(" ");
+			if (current == ' ') {
+				encoded.append("       ");
+			} else {
+				encoded.append("   ");
+			}
+		}
+		return encoded.toString();
+	}
+
+	/**
+	 * Decode input and return output plain text.
+	 * @param input Morse code
+	 * @return plain text
+	 */
+	public static String decode(String input) {
+		StringBuilder decoded = new StringBuilder();
+		String lowerCaseInput = input.toLowerCase();
+		for (String current : lowerCaseInput.split(" ")) {
+			if (getKeysByValue(morseCode, current).toArray().length != 0)
+				decoded.append(getKeysByValue(morseCode, current).toArray()[0]);
+			decoded.append(" ");
+		}
+		return decoded.toString();
+	}
+
+	/**
+	 * Helper method provided to getting keys by value.
+	 * @param map map
+	 * @param value value
+	 * @param <T> type of key
+	 * @param <E> type of value
+	 * @return keys by value
+	 */
+	private static <T, E> Set<T> getKeysByValue(Map<T, E> map, E value) {
+		return map.entrySet()
+				.stream()
+				.filter(entry -> Objects.equals(entry.getValue(), value))
+				.map(Map.Entry::getKey)
+				.collect(Collectors.toSet());
+	}
 }

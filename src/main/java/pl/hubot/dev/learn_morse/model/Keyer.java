@@ -5,7 +5,13 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 
+/**
+ * A class that is responding from buzzer sound and transmitting Morse signals.
+ */
 class Keyer {
+	private static final int SAMPLING_FREQUENCY_IN_HZ = 8000;
+	private static final int NUMBER_OF_FADE_SAMPLES = 80;
+
 	/**
 	 * Transmit dah.
 	 * @throws LineUnavailableException sound(...) method
@@ -81,7 +87,4 @@ class Keyer {
 		sdl.drain();
 		sdl.close();
 	}
-
-	private static final int SAMPLING_FREQUENCY_IN_HZ = 8000;
-	private static final int NUMBER_OF_FADE_SAMPLES = 80;
 }
