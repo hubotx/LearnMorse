@@ -32,14 +32,17 @@ public class Main extends Application {
 	/**
 	 * Start JavaFX application and show main window.
 	 * @param primaryStage primary stage
-	 * @throws IOException sometimes getClass().getResource(...) can throws it if resource isn't found
 	 */
     @Override
-    public void start(Stage primaryStage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("../../../../view/Main.fxml"));
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root));
-        primaryStage.show();
+    public void start(Stage primaryStage) {
+    	try {
+		    Parent root = FXMLLoader.load(getClass().getResource("../../../../view/Main.fxml"));
+		    primaryStage.setTitle("Learn Morse");
+		    primaryStage.setScene(new Scene(root));
+		    primaryStage.show();
+	    } catch (IOException ex) {
+    		ErrorHandler.handleException(ex);
+	    }
     }
 
 	/**

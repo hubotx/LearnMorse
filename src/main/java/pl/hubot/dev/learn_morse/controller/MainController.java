@@ -1,14 +1,14 @@
 package pl.hubot.dev.learn_morse.controller;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
+import pl.hubot.dev.learn_morse.ErrorHandler;
+import pl.hubot.dev.learn_morse.model.MorseCode;
 import pl.hubot.dev.learn_morse.model.MorseSettings;
 import pl.hubot.dev.learn_morse.model.MorseString;
 
@@ -29,17 +29,23 @@ public class MainController implements Initializable {
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		MorseString.setSettings(new MorseSettings(2, 4, 800));
+		try {
+			MorseSettings.load();
+		} catch (IOException ex) {
+			ErrorHandler.handleException(ex);
+		}
+	}
+
+	@Override
+	public void finalize() {
+		MorseSettings.unload();
 	}
 
 	/**
 	 * Receive Morse code.
 	 */
-	public void receive(ActionEvent event) {
-		new Thread(() -> {
-			MorseString.receive(txt_input.getText());
-			txt_output.setText(MorseString.getDecoded());
-		}).start();
+	public void receive() {
+		new Thread(() -> txt_output.setText(MorseCode.decode(txt_input.getText()))).start();
 	}
 
 	/**
@@ -47,16 +53,14 @@ public class MainController implements Initializable {
 	 * @throws LineUnavailableException caused by sound(...) method
 	 * @throws InterruptedException caused by Thread.Sleep(...)
 	 */
-	public void transmit(ActionEvent event) throws LineUnavailableException, InterruptedException {
+	public void transmit() throws LineUnavailableException, InterruptedException {
 		new Thread(() -> {
 			try {
-				MorseString.getSettings().setMuted(true);
 				MorseString.transmit(txt_input.getText());
-				MorseString.getSettings().setMuted(false);
-			} catch (Exception ex) {
-
+			} catch (LineUnavailableException | InterruptedException ex) {
+				ErrorHandler.handleException(ex);
 			}
-			txt_output.setText(MorseString.getEncoded());
+			txt_output.setText(MorseCode.encode(txt_input.getText()));
 		}).start();
 	}
 
@@ -65,10 +69,10 @@ public class MainController implements Initializable {
 	 * @throws LineUnavailableException caused by sound(...) method
 	 * @throws InterruptedException caused by Thread.Sleep(...)
 	 */
-	public void train(ActionEvent event) throws LineUnavailableException, InterruptedException {
+	public void train() throws LineUnavailableException, InterruptedException {
 		new Thread(() -> {
 			try {
-				char[] pool = MorseString.getSettings().getPool();
+				char[] pool = MorseSettings.getPool();
 				StringBuilder randomCharacters = new StringBuilder();
 				for (int i = 0; i < 5; i++) {
 					for (int j = 0; j < 4; j++) {
@@ -78,10 +82,10 @@ public class MainController implements Initializable {
 					randomCharacters.append(' ');
 				}
 				MorseString.transmit(randomCharacters.toString());
-				txt_output.setText(MorseString.getEncoded());
+				// TODO: implement checking results of training
 			}
-			catch (Exception ex) {
-
+			catch (LineUnavailableException | InterruptedException ex) {
+				ErrorHandler.handleException(ex);
 			}
 		}).start();
 	}
@@ -98,7 +102,6 @@ public class MainController implements Initializable {
 		stage.show();
 	}
 
-	@FXML public MenuItem btn_transmit;
 	@FXML public TextArea txt_input;
 	@FXML public TextArea txt_output;
 }

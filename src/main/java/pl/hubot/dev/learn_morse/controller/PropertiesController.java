@@ -1,18 +1,16 @@
 package pl.hubot.dev.learn_morse.controller;
 
-import com.sun.xml.internal.ws.commons.xmlutil.Converter;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import pl.hubot.dev.learn_morse.Main;
 import pl.hubot.dev.learn_morse.model.CharPool;
 import pl.hubot.dev.learn_morse.model.MorseSettings;
-import pl.hubot.dev.learn_morse.model.MorseString;
 
 import java.net.URL;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 
 /**
@@ -26,22 +24,31 @@ public class PropertiesController implements Initializable {
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		pauseBeforeKeying.setText(Integer.toString(MorseString.getSettings().getPauseBeforeKeying()));
-		keyingSpeed.setText(Integer.toString(MorseString.getSettings().getKeyingSpeed()));
-		ditLength.setText(Integer.toString(MorseString.getSettings().getDitLength()));
-		dahLength.setText(Integer.toString(MorseString.getSettings().getDahLength()));
-		lengthOfSpaceBetweenCharacters.setText(Integer.toString(MorseString.getSettings().getLengthOfSpaceBetweenCharacters() / MorseString.getSettings().getDitLength()));
-		lengthOfSpaceBetweenWords.setText(Integer.toString(MorseString.getSettings().getLengthOfSpaceBetweenWords() / MorseString.getSettings().getDitLength()));
-		lengthOfSpaceBetweenCharElements.setText(Integer.toString(MorseString.getSettings().getLengthOfSpaceBetweenCharElements() / MorseString.getSettings().getDitLength()));
-		frequency.setText(Integer.toString(MorseString.getSettings().getFrequency()));
-		volume.setText(Float.toString(MorseString.getSettings().getVolume() * 100.0f));
+		pauseBeforeKeying.setText(Integer.toString(MorseSettings.getPauseBeforeKeying()));
+		keyingSpeed.setText(Integer.toString(MorseSettings.getKeyingSpeed()));
+		ditLength.setText(Integer.toString(MorseSettings.getDitLength()));
+		dahLength.setText(Integer.toString(MorseSettings.getDahLength()));
+		lengthOfSpaceBetweenCharacters.setText(Integer.toString(MorseSettings.getLengthOfSpaceBetweenCharacters() / MorseSettings.getDitLength()));
+		lengthOfSpaceBetweenWords.setText(Integer.toString(MorseSettings.getLengthOfSpaceBetweenWords() / MorseSettings.getDitLength()));
+		lengthOfSpaceBetweenCharElements.setText(Integer.toString(MorseSettings.getLengthOfSpaceBetweenCharElements() / MorseSettings.getDitLength()));
+		frequency.setText(Integer.toString(MorseSettings.getFrequency()));
+		volume.setText(Float.toString(MorseSettings.getVolume() * 100.0f));
+
+		charPool.getItems().add(String.valueOf(CharPool.englishSet));
+		charPool.getItems().add(String.valueOf(CharPool.polishSet));
+		charPool.getItems().add(String.valueOf(CharPool.digits));
+		charPool.getItems().add(String.valueOf(CharPool.alphanumeric));
+		charPool.getItems().add(String.valueOf(CharPool.polishAlphanumeric));
+		charPool.getItems().add(String.valueOf(CharPool.symbols));
+		charPool.getItems().add(String.valueOf(CharPool.fullCharacterSet));
+
+		charPool.getSelectionModel().select(String.valueOf(MorseSettings.getPool()));
 	}
 
 	/**
 	 * Close window.
-	 * @param event event
 	 */
-	public void cancel(ActionEvent event) {
+	public void cancel() {
 		// get a handle to the stage
 		Stage stage = (Stage) closeButton.getScene().getWindow();
 		// do what you have to do
@@ -50,22 +57,19 @@ public class PropertiesController implements Initializable {
 
 	/**
 	 * Apply changes.
-	 * @param event event
 	 */
-	public void ok(ActionEvent event) {
-		MorseString.setSettings(new MorseSettings(
-				Integer.parseInt(pauseBeforeKeying.getText()),
-				Integer.parseInt(lengthOfSpaceBetweenCharacters.getText()) * MorseString.getSettings().getDitLength(),
-				Integer.parseInt(lengthOfSpaceBetweenWords.getText()) * MorseString.getSettings().getDitLength(),
-				Integer.parseInt(lengthOfSpaceBetweenCharElements.getText()) * MorseString.getSettings().getDitLength(),
-				Integer.parseInt(keyingSpeed.getText()),
-				Integer.parseInt(ditLength.getText()),
-				Integer.parseInt(dahLength.getText()),
-				Integer.parseInt(frequency.getText()),
-				Float.parseFloat(volume.getText()) / 100.0f,
-				false,
-				CharPool.englishSet
-		));
+	public void ok() {
+		// set properties
+		MorseSettings.setPauseBeforeKeying(Integer.parseInt(pauseBeforeKeying.getText()));
+		MorseSettings.setLengthOfSpaceBetweenCharacters(Integer.parseInt(lengthOfSpaceBetweenCharacters.getText()) * MorseSettings.getDitLength());
+		MorseSettings.setLengthOfSpaceBetweenWords(Integer.parseInt(lengthOfSpaceBetweenWords.getText()) * MorseSettings.getDitLength());
+		MorseSettings.setLengthOfSpaceBetweenCharElements(Integer.parseInt(lengthOfSpaceBetweenCharElements.getText()) * MorseSettings.getDitLength());
+		MorseSettings.setKeyingSpeed(Integer.parseInt(keyingSpeed.getText()));
+		MorseSettings.setDitLength(Integer.parseInt(ditLength.getText()));
+		MorseSettings.setDahLength(Integer.parseInt(dahLength.getText()));
+		MorseSettings.setFrequency(Integer.parseInt(frequency.getText()));
+		MorseSettings.setVolume(Float.parseFloat(volume.getText()) / 100.0f);
+		MorseSettings.setPool(charPool.getSelectionModel().getSelectedItem().toCharArray());
 		// get a handle to the stage
 		Stage stage = (Stage) closeButton.getScene().getWindow();
 		// do what you have to do
@@ -98,6 +102,9 @@ public class PropertiesController implements Initializable {
 
 	@FXML
 	private TextField volume;
+
+	@FXML
+	private ComboBox<String> charPool;
 
 	@FXML
 	private Button closeButton;
