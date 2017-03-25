@@ -93,6 +93,114 @@ public class MorseString {
 				case "__..": // z
 					decoded += "z";
 					break;
+				case "._._": // ą
+					decoded += "ą";
+					break;
+				case "_._..": // ć
+					decoded += "ć";
+					break;
+				case ".._..": // ę
+					decoded += "ę";
+					break;
+				case "____": // ch
+					decoded += "ch";
+					break;
+				case "._.._": // ł
+					decoded += "ł";
+					break;
+				case "__.__": // ń
+					decoded += "ń";
+					break;
+				case "___.": // ó
+					decoded += "ó";
+					break;
+				case "..._...": // ś
+					decoded += "ś";
+					break;
+				case "__.._.": // ż
+					decoded += "ż";
+					break;
+				case "__.._": // ź
+					decoded += "ź";
+					break;
+				case ".____": // 1
+					decoded += "1";
+					break;
+				case "..___": // 2
+					decoded += "2";
+					break;
+				case "...__": // 3
+					decoded += "3";
+					break;
+				case "...._": // 4
+					decoded += "4";
+					break;
+				case ".....": // 5
+					decoded += "5";
+					break;
+				case "_....": // 6
+					decoded += "6";
+					break;
+				case "__...": // 7
+					decoded += "7";
+					break;
+				case "___..": // 8
+					decoded += "8";
+					break;
+				case "____.": // 9
+					decoded += "9";
+					break;
+				case "_____": // 0
+					decoded += "0";
+					break;
+				case "._._._": // .
+					decoded += ".";
+					break;
+				case "__..__": // ,
+					decoded += ",";
+					break;
+				case ".____.": // '
+					decoded += "'";
+					break;
+				case "._.._.": // "
+					decoded += "\"";
+					break;
+				case "..__._": // _
+					decoded += "_";
+					break;
+				case "___...": // :
+					decoded += ":";
+					break;
+				case "_._._.": // ;
+					decoded += ";";
+					break;
+				case "..__..": // ?
+					decoded += "?";
+					break;
+				case "_._.__": // !
+					decoded += "!";
+					break;
+				case "_...._": // -
+					decoded += "-";
+					break;
+				case "._._.": // +
+					decoded += "+";
+					break;
+				case "_.._.": // /
+					decoded += "/";
+					break;
+				case "_.__.": // (
+					decoded += "(";
+					break;
+				case "_.__._": // )
+					decoded += ")";
+					break;
+				case "_..._": // =
+					decoded += "=";
+					break;
+				case ".__._.": // @
+					decoded += "@";
+					break;
 			}
 
 			decoded += " ";
@@ -134,11 +242,19 @@ public class MorseString {
 					encoded += " _...";
 					break;
 				case 'c': // _._.
-					dah();
-					dit();
-					dah();
-					dit();
-					encoded += "_._.";
+					if ((i + 1) < lowerCaseInput.length() && lowerCaseInput.charAt(i + 1) == 'h') {
+						dah();
+						dah();
+						dah();
+						dah();
+						encoded += "____";
+					} else {
+						dah();
+						dit();
+						dah();
+						dit();
+						encoded += "_._.";
+					}
 					break;
 				case 'd': // _..
 					dah();
@@ -281,16 +397,316 @@ public class MorseString {
 					dit();
 					encoded += "__..";
 					break;
+				case 'ą': // ._._
+					dit();
+					dah();
+					dit();
+					dah();
+					encoded += "._._";
+					break;
+				case 'ć': // _._..
+					dah();
+					dit();
+					dah();
+					dit();
+					dit();
+					encoded += "_._..";
+				case 'ę': // .._..
+					dit();
+					dit();
+					dah();
+					dit();
+					dit();
+					encoded += ".._..";
+					break;
+				case 'é': // .._..
+					dit();
+					dit();
+					dah();
+					dit();
+					dit();
+					encoded += ".._..";
+					break;
+				case 'ł': // ._.._
+					dit();
+					dah();
+					dit();
+					dit();
+					dah();
+					encoded += "._.._";
+					break;
+				case 'ń': // __.__
+					dah();
+					dah();
+					dit();
+					dah();
+					dah();
+					encoded += "__.__";
+					break;
+				case 'ó': // ___.
+					dah();
+					dah();
+					dah();
+					dit();
+					encoded += "___.";
+					break;
+				case 'ś': // ..._...
+					dit();
+					dit();
+					dit();
+					dah();
+					dit();
+					dit();
+					dit();
+					encoded += "..._...";
+					break;
+				case 'ź': // __.._
+					dah();
+					dah();
+					dit();
+					dit();
+					dah();
+					encoded += "__.._";
+					break;
+				case 'ż': // __.._.
+					dah();
+					dah();
+					dit();
+					dit();
+					dah();
+					dit();
+					encoded += "__.._.";
+					break;
+				case '1': // .____
+					dit();
+					dah();
+					dah();
+					dah();
+					dah();
+					encoded += ".____";
+					break;
+				case '2': // ..___
+					dit();
+					dit();
+					dah();
+					dah();
+					dah();
+					encoded += "..___";
+					break;
+				case '3': // ...__
+					dit();
+					dit();
+					dit();
+					dah();
+					dah();
+					encoded += "...__";
+					break;
+				case '4': // ...._
+					dit();
+					dit();
+					dit();
+					dit();
+					dah();
+					encoded += "...._";
+					break;
+				case '5': // .....
+					dit();
+					dit();
+					dit();
+					dit();
+					dit();
+					encoded += ".....";
+					break;
+				case '6': // _....
+					dah();
+					dit();
+					dit();
+					dit();
+					dit();
+					encoded += "_....";
+					break;
+				case '7': // __...
+					dah();
+					dah();
+					dit();
+					dit();
+					dit();
+					encoded += "__...";
+					break;
+				case '8': // ___..
+					dah();
+					dah();
+					dah();
+					dit();
+					dit();
+					encoded += "___..";
+					break;
+				case '9': // ____.
+					dah();
+					dah();
+					dah();
+					dah();
+					dit();
+					encoded += "____.";
+					break;
+				case '0': // _____
+					dah();
+					dah();
+					dah();
+					dah();
+					dah();
+					encoded += "_____";
+					break;
+				case '.':
+					dit();
+					dah();
+					dit();
+					dah();
+					dit();
+					dah();
+					encoded += "._._._";
+					break;
+				case ',':
+					dah();
+					dah();
+					dit();
+					dit();
+					dah();
+					dah();
+					encoded += "__..__";
+					break;
+				case '\'':
+					dit();
+					dah();
+					dah();
+					dah();
+					dah();
+					dit();
+					encoded += ".____.";
+					break;
+				case '"':
+					dit();
+					dah();
+					dit();
+					dit();
+					dah();
+					dit();
+					encoded += "._.._.";
+					break;
+				case '_':
+					dit();
+					dit();
+					dah();
+					dah();
+					dit();
+					dah();
+					encoded += "..__._";
+					break;
+				case ':':
+					dah();
+					dah();
+					dah();
+					dit();
+					dit();
+					dit();
+					encoded += "___...";
+					break;
+				case ';':
+					dah();
+					dit();
+					dah();
+					dit();
+					dah();
+					dit();
+					encoded += "_._._.";
+					break;
+				case '?':
+					dit();
+					dit();
+					dah();
+					dah();
+					dit();
+					dit();
+					encoded += "..__..";
+					break;
+				case '!':
+					dah();
+					dit();
+					dah();
+					dit();
+					dah();
+					dah();
+					encoded += "_._.__";
+					break;
+				case '-':
+					dah();
+					dit();
+					dit();
+					dit();
+					dit();
+					dah();
+					encoded += "_...._";
+					break;
+				case '+':
+					dit();
+					dah();
+					dit();
+					dah();
+					dit();
+					encoded += "._._.";
+					break;
+				case '/':
+					dah();
+					dit();
+					dit();
+					dah();
+					dit();
+					encoded += "_.._.";
+					break;
+				case '(':
+					dah();
+					dit();
+					dah();
+					dah();
+					dit();
+					encoded += "_.__.";
+					break;
+				case ')':
+					dah();
+					dit();
+					dah();
+					dah();
+					dit();
+					dah();
+					encoded += "_.__._";
+					break;
+				case '=':
+					dah();
+					dit();
+					dit();
+					dit();
+					dah();
+					encoded += "_..._";
+					break;
+				case '@':
+					dit();
+					dah();
+					dah();
+					dit();
+					dah();
+					dit();
+					encoded += ".__._.";
+					break;
 			}
 
 			encoded += " ";
 
 			if (current == ' ') {
-				pauseWord();
+				if (!settings.isMuted()) pauseWord();
 				encoded += "       ";
 			}
 			else {
-				pauseChar();
+				if (!settings.isMuted()) pauseChar();
 				encoded += "   ";
 			}
 		}
@@ -310,8 +726,10 @@ public class MorseString {
 	 * @throws InterruptedException Thread.sleep(...) method
 	 */
 	private static void dah() throws LineUnavailableException, InterruptedException {
-		sound(settings.getDahLength());
-		pauseCharElement();
+		if (!settings.isMuted()) {
+			sound(settings.getDahLength());
+			pauseCharElement();
+		}
 	}
 
 	/**
@@ -320,8 +738,10 @@ public class MorseString {
 	 * @throws InterruptedException Thread.sleep(...) method
 	 */
 	private static void dit() throws LineUnavailableException, InterruptedException {
-		sound(settings.getDitLength());
-		pauseCharElement();
+		if (!settings.isMuted()) {
+			sound(settings.getDitLength());
+			pauseCharElement();
+		}
 	}
 
 	/**

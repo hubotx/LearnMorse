@@ -29,8 +29,7 @@ public class MainController implements Initializable {
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		settings = new MorseSettings(2, 4, 800);
-		MorseString.setSettings(settings);
+		MorseString.setSettings(new MorseSettings(2, 4, 800));
 	}
 
 	/**
@@ -51,7 +50,9 @@ public class MainController implements Initializable {
 	public void transmit(ActionEvent event) throws LineUnavailableException, InterruptedException {
 		new Thread(() -> {
 			try {
+				MorseString.getSettings().setMuted(true);
 				MorseString.transmit(txt_input.getText());
+				MorseString.getSettings().setMuted(false);
 			} catch (Exception ex) {
 
 			}
@@ -67,9 +68,7 @@ public class MainController implements Initializable {
 	public void train(ActionEvent event) throws LineUnavailableException, InterruptedException {
 		new Thread(() -> {
 			try {
-				char[] pool = new char[]{'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
-						'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x',
-						'y', 'z'};
+				char[] pool = MorseString.getSettings().getPool();
 				StringBuilder randomCharacters = new StringBuilder();
 				for (int i = 0; i < 5; i++) {
 					for (int j = 0; j < 4; j++) {
@@ -99,32 +98,7 @@ public class MainController implements Initializable {
 		stage.show();
 	}
 
-	/**
-	 * Get application settings.
-	 * @return settings
-	 */
-	static MorseSettings getSettings() {
-		return settings;
-	}
-
-	/**
-	 * Save application settings.
-	 * @param _settings settings
-	 */
-	static void setSettings(MorseSettings _settings) {
-		settings = _settings;
-	}
-
-	/**
-	 * Apply application settings.
-	 */
-	static void applySettings() {
-		MorseString.setSettings(settings);
-	}
-
 	@FXML public MenuItem btn_transmit;
 	@FXML public TextArea txt_input;
 	@FXML public TextArea txt_output;
-
-	private static MorseSettings settings;
 }

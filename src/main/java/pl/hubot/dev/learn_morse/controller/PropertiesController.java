@@ -8,7 +8,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import pl.hubot.dev.learn_morse.Main;
+import pl.hubot.dev.learn_morse.model.CharPool;
 import pl.hubot.dev.learn_morse.model.MorseSettings;
+import pl.hubot.dev.learn_morse.model.MorseString;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -24,15 +26,15 @@ public class PropertiesController implements Initializable {
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		pauseBeforeKeying.setText(Integer.toString(settings.getPauseBeforeKeying()));
-		keyingSpeed.setText(Integer.toString(settings.getKeyingSpeed()));
-		ditLength.setText(Integer.toString(settings.getDitLength()));
-		dahLength.setText(Integer.toString(settings.getDahLength()));
-		lengthOfSpaceBetweenCharacters.setText(Integer.toString(settings.getLengthOfSpaceBetweenCharacters() / settings.getDitLength()));
-		lengthOfSpaceBetweenWords.setText(Integer.toString(settings.getLengthOfSpaceBetweenWords() / settings.getDitLength()));
-		lengthOfSpaceBetweenCharElements.setText(Integer.toString(settings.getLengthOfSpaceBetweenCharElements() / settings.getDitLength()));
-		frequency.setText(Integer.toString(settings.getFrequency()));
-		volume.setText(Float.toString(settings.getVolume() * 100.0f));
+		pauseBeforeKeying.setText(Integer.toString(MorseString.getSettings().getPauseBeforeKeying()));
+		keyingSpeed.setText(Integer.toString(MorseString.getSettings().getKeyingSpeed()));
+		ditLength.setText(Integer.toString(MorseString.getSettings().getDitLength()));
+		dahLength.setText(Integer.toString(MorseString.getSettings().getDahLength()));
+		lengthOfSpaceBetweenCharacters.setText(Integer.toString(MorseString.getSettings().getLengthOfSpaceBetweenCharacters() / MorseString.getSettings().getDitLength()));
+		lengthOfSpaceBetweenWords.setText(Integer.toString(MorseString.getSettings().getLengthOfSpaceBetweenWords() / MorseString.getSettings().getDitLength()));
+		lengthOfSpaceBetweenCharElements.setText(Integer.toString(MorseString.getSettings().getLengthOfSpaceBetweenCharElements() / MorseString.getSettings().getDitLength()));
+		frequency.setText(Integer.toString(MorseString.getSettings().getFrequency()));
+		volume.setText(Float.toString(MorseString.getSettings().getVolume() * 100.0f));
 	}
 
 	/**
@@ -51,18 +53,19 @@ public class PropertiesController implements Initializable {
 	 * @param event event
 	 */
 	public void ok(ActionEvent event) {
-		MainController.setSettings(new MorseSettings(
+		MorseString.setSettings(new MorseSettings(
 				Integer.parseInt(pauseBeforeKeying.getText()),
-				Integer.parseInt(lengthOfSpaceBetweenCharacters.getText()) * settings.getDitLength(),
-				Integer.parseInt(lengthOfSpaceBetweenWords.getText()) * settings.getDitLength(),
-				Integer.parseInt(lengthOfSpaceBetweenCharElements.getText()) * settings.getDitLength(),
+				Integer.parseInt(lengthOfSpaceBetweenCharacters.getText()) * MorseString.getSettings().getDitLength(),
+				Integer.parseInt(lengthOfSpaceBetweenWords.getText()) * MorseString.getSettings().getDitLength(),
+				Integer.parseInt(lengthOfSpaceBetweenCharElements.getText()) * MorseString.getSettings().getDitLength(),
 				Integer.parseInt(keyingSpeed.getText()),
 				Integer.parseInt(ditLength.getText()),
 				Integer.parseInt(dahLength.getText()),
 				Integer.parseInt(frequency.getText()),
-				Float.parseFloat(volume.getText()) / 100.0f
-				));
-		MainController.applySettings();
+				Float.parseFloat(volume.getText()) / 100.0f,
+				false,
+				CharPool.englishSet
+		));
 		// get a handle to the stage
 		Stage stage = (Stage) closeButton.getScene().getWindow();
 		// do what you have to do
@@ -98,6 +101,4 @@ public class PropertiesController implements Initializable {
 
 	@FXML
 	private Button closeButton;
-
-	private MorseSettings settings = MainController.getSettings();
 }

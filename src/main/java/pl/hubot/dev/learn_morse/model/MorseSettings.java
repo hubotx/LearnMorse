@@ -17,6 +17,8 @@ public class MorseSettings {
 		this.lengthOfSpaceBetweenCharElements = this.ditLength;
 		this.frequency = 800;
 		this.volume = 0.1f;
+		this.muted = false;
+		this.pool = CharPool.englishSet;
 	}
 
 	/**
@@ -35,6 +37,8 @@ public class MorseSettings {
 		this.pauseBeforeKeying = pauseBeforeKeying;
 		this.frequency = frequency;
 		this.volume = 0.1f;
+		this.muted = false;
+		this.pool = CharPool.englishSet;
 	}
 
 	/**
@@ -54,6 +58,8 @@ public class MorseSettings {
 		this.pauseBeforeKeying = pauseBeforeKeying;
 		this.frequency = frequency;
 		this.volume = volume;
+		this.muted = false;
+		this.pool = CharPool.englishSet;
 	}
 
 	/**
@@ -76,6 +82,8 @@ public class MorseSettings {
 		this.dahLength = 3 * this.ditLength;
 		this.frequency = frequency;
 		this.volume = volume;
+		this.muted = false;
+		this.pool = CharPool.englishSet;
 	}
 
 	/**
@@ -89,8 +97,10 @@ public class MorseSettings {
 	 * @param dahLength dah length
 	 * @param frequency keyer frequency
 	 * @param volume volume
+	 * @param muted is keyer muted
+	 * @param pool character pool
 	 */
-	public MorseSettings(int pauseBeforeKeying, int lengthOfSpaceBetweenCharacters, int lengthOfSpaceBetweenWords, int lengthOfSpaceBetweenCharElements, int keyingSpeed, int ditLength, int dahLength, int frequency, float volume) {
+	public MorseSettings(int pauseBeforeKeying, int lengthOfSpaceBetweenCharacters, int lengthOfSpaceBetweenWords, int lengthOfSpaceBetweenCharElements, int keyingSpeed, int ditLength, int dahLength, int frequency, float volume, boolean muted, char[] pool) {
 		this.pauseBeforeKeying = pauseBeforeKeying;
 		this.lengthOfSpaceBetweenCharacters = lengthOfSpaceBetweenCharacters;
 		this.lengthOfSpaceBetweenWords = lengthOfSpaceBetweenWords;
@@ -100,6 +110,8 @@ public class MorseSettings {
 		this.dahLength = dahLength * this.ditLength;
 		this.frequency = frequency;
 		this.volume = volume;
+		this.muted = muted;
+		this.pool = pool;
 	}
 
 	/**
@@ -246,6 +258,22 @@ public class MorseSettings {
 		this.volume = volume;
 	}
 
+	public boolean isMuted() {
+		return muted;
+	}
+
+	public void setMuted(boolean muted) {
+		this.muted = muted;
+	}
+
+	public char[] getPool() {
+		return pool;
+	}
+
+	public void setPool(char[] pool) {
+		this.pool = pool;
+	}
+
 	private int pauseBeforeKeying;
 	private int lengthOfSpaceBetweenCharacters;
 	private int lengthOfSpaceBetweenWords;
@@ -255,5 +283,7 @@ public class MorseSettings {
 	private int dahLength;
 	private int frequency;
 	private float volume;
+	private boolean muted;
+	private char[] pool;
 	// private String soundcard;
 }
