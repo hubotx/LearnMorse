@@ -17,8 +17,8 @@ class Keyer {
 	 * @throws LineUnavailableException sound(...) method
 	 * @throws InterruptedException Thread.sleep(...) method
 	 */
-	static void dah() throws LineUnavailableException, InterruptedException {
-		sound(MorseSettings.getDahLength());
+	static void dash() throws LineUnavailableException, InterruptedException {
+		sound(Integer.parseInt(MorseSettings.getProperties().getProperty("dashLength")));
 		pauseCharElement();
 	}
 
@@ -27,8 +27,8 @@ class Keyer {
 	 * @throws LineUnavailableException sound(...) method
 	 * @throws InterruptedException Thread.sleep(...) method
 	 */
-	static void dit() throws LineUnavailableException, InterruptedException {
-		sound(MorseSettings.getDitLength());
+	static void dot() throws LineUnavailableException, InterruptedException {
+		sound(Integer.parseInt(MorseSettings.getProperties().getProperty("dotLength")));
 		pauseCharElement();
 	}
 
@@ -37,7 +37,7 @@ class Keyer {
 	 * @throws InterruptedException Thread.sleep(...) method
 	 */
 	static void pauseBeforeKeying() throws InterruptedException {
-		Thread.sleep(MorseSettings.getPauseBeforeKeying());
+		Thread.sleep(Integer.parseInt(MorseSettings.getProperties().getProperty("pauseBeforeKeying")));
 	}
 
 	/**
@@ -45,7 +45,7 @@ class Keyer {
 	 * @throws InterruptedException Thread.sleep(...) method
 	 */
 	private static void pauseCharElement() throws InterruptedException {
-		Thread.sleep(MorseSettings.getLengthOfSpaceBetweenCharElements());
+		Thread.sleep(Integer.parseInt(MorseSettings.getProperties().getProperty("lengthOfSpaceBetweenCharElements")));
 	}
 
 	/**
@@ -53,7 +53,7 @@ class Keyer {
 	 * @throws InterruptedException Thread.sleep(...) method
 	 */
 	static void pauseChar() throws InterruptedException {
-		Thread.sleep(MorseSettings.getLengthOfSpaceBetweenCharacters());
+		Thread.sleep(Integer.parseInt(MorseSettings.getProperties().getProperty("lengthOfSpaceBetweenCharacters")));
 	}
 
 	/**
@@ -61,7 +61,7 @@ class Keyer {
 	 * @throws InterruptedException Thread.sleep(...) method
 	 */
 	static void pauseWord() throws InterruptedException {
-		Thread.sleep(MorseSettings.getLengthOfSpaceBetweenWords());
+		Thread.sleep(Integer.parseInt(MorseSettings.getProperties().getProperty("lengthOfSpaceBetweenWords")));
 	}
 
 	/**
@@ -72,8 +72,8 @@ class Keyer {
 	private static void sound(int msecs) throws LineUnavailableException {
 		byte[] buf = new byte[msecs * Byte.SIZE];
 		for (int i = 0; i < buf.length; i++) {
-			double angle = 2 * Math.PI * i * MorseSettings.getFrequency() / SAMPLING_FREQUENCY_IN_HZ;
-			buf[i] = (byte) (Math.sin(angle) * MorseSettings.getVolume() * Byte.MAX_VALUE);
+			double angle = 2 * Math.PI * i * Integer.parseInt(MorseSettings.getProperties().getProperty("frequency")) / SAMPLING_FREQUENCY_IN_HZ;
+			buf[i] = (byte) (Math.sin(angle) * Float.parseFloat(MorseSettings.getProperties().getProperty("volume")) * Byte.MAX_VALUE);
 		}
 		for (int i = 0; i < NUMBER_OF_FADE_SAMPLES && i < buf.length / 2; i++) {
 			buf[i] = (byte) (buf[i] * i / NUMBER_OF_FADE_SAMPLES);

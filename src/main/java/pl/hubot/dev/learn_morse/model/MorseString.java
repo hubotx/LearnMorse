@@ -29,8 +29,8 @@ public class MorseString {
 			String encodedCharacter = MorseCode.morseCode.getOrDefault(Character.toString(current), "");
 			for (int j = 0; j < encodedCharacter.length(); j++) {
 				char currentEnc = encodedCharacter.charAt(j);
-				if (currentEnc == '_') Keyer.dah();
-				else if (currentEnc == '.') Keyer.dit();
+				if (currentEnc == '_') Keyer.dash();
+				else if (currentEnc == '.') Keyer.dot();
 			}
 			Keyer.pauseChar();
 

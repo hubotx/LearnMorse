@@ -18,8 +18,8 @@ import java.util.ResourceBundle;
 public class PropertiesController implements Initializable {
 	@FXML private TextField pauseBeforeKeying;
 	@FXML private TextField keyingSpeed;
-	@FXML private TextField ditLength;
-	@FXML private TextField dahLength;
+	@FXML private TextField dotLength;
+	@FXML private TextField dashLength;
 	@FXML private TextField lengthOfSpaceBetweenCharacters;
 	@FXML private TextField lengthOfSpaceBetweenWords;
 	@FXML private TextField lengthOfSpaceBetweenCharElements;
@@ -35,15 +35,21 @@ public class PropertiesController implements Initializable {
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		pauseBeforeKeying.setText(Integer.toString(MorseSettings.getPauseBeforeKeying()));
-		keyingSpeed.setText(Integer.toString(MorseSettings.getKeyingSpeed()));
-		ditLength.setText(Integer.toString(MorseSettings.getDitLength()));
-		dahLength.setText(Integer.toString(MorseSettings.getDahLength()));
-		lengthOfSpaceBetweenCharacters.setText(Integer.toString(MorseSettings.getLengthOfSpaceBetweenCharacters() / MorseSettings.getDitLength()));
-		lengthOfSpaceBetweenWords.setText(Integer.toString(MorseSettings.getLengthOfSpaceBetweenWords() / MorseSettings.getDitLength()));
-		lengthOfSpaceBetweenCharElements.setText(Integer.toString(MorseSettings.getLengthOfSpaceBetweenCharElements() / MorseSettings.getDitLength()));
-		frequency.setText(Integer.toString(MorseSettings.getFrequency()));
-		volume.setText(Float.toString(MorseSettings.getVolume() * 100.0f));
+		pauseBeforeKeying.setText(MorseSettings.getProperties().getProperty("pauseBeforeKeying"));
+		keyingSpeed.setText(MorseSettings.getProperties().getProperty("keyingSpeed"));
+		dotLength.setText(MorseSettings.getProperties().getProperty("dotLength"));
+		dashLength.setText(MorseSettings.getProperties().getProperty("dashLength"));
+		lengthOfSpaceBetweenCharacters.setText(String.valueOf(
+				Integer.parseInt(MorseSettings.getProperties().getProperty("lengthOfSpaceBetweenCharacters"))
+				/ Integer.parseInt(MorseSettings.getProperties().getProperty("dotLength"))));
+		lengthOfSpaceBetweenWords.setText(String.valueOf(
+				Integer.parseInt(MorseSettings.getProperties().getProperty("lengthOfSpaceBetweenWords"))
+						/ Integer.parseInt(MorseSettings.getProperties().getProperty("dotLength"))));
+		lengthOfSpaceBetweenCharElements.setText(String.valueOf(
+				Integer.parseInt(MorseSettings.getProperties().getProperty("lengthOfSpaceBetweenCharElements"))
+						/ Integer.parseInt(MorseSettings.getProperties().getProperty("dotLength"))));
+		frequency.setText(MorseSettings.getProperties().getProperty("frequency"));
+		volume.setText(String.valueOf(Float.parseFloat(MorseSettings.getProperties().getProperty("volume")) * 100.0f));
 
 		charPool.getItems().add(String.valueOf(CharPool.englishSet));
 		charPool.getItems().add(String.valueOf(CharPool.polishSet));
@@ -53,7 +59,7 @@ public class PropertiesController implements Initializable {
 		charPool.getItems().add(String.valueOf(CharPool.symbols));
 		charPool.getItems().add(String.valueOf(CharPool.fullCharacterSet));
 
-		charPool.getSelectionModel().select(String.valueOf(MorseSettings.getPool()));
+		charPool.getSelectionModel().select(String.valueOf(MorseSettings.getProperties().getProperty("pool")));
 	}
 
 	/**
@@ -71,16 +77,22 @@ public class PropertiesController implements Initializable {
 	 */
 	public void ok() {
 		// set properties
-		MorseSettings.setPauseBeforeKeying(Integer.parseInt(pauseBeforeKeying.getText()));
-		MorseSettings.setLengthOfSpaceBetweenCharacters(Integer.parseInt(lengthOfSpaceBetweenCharacters.getText()) * MorseSettings.getDitLength());
-		MorseSettings.setLengthOfSpaceBetweenWords(Integer.parseInt(lengthOfSpaceBetweenWords.getText()) * MorseSettings.getDitLength());
-		MorseSettings.setLengthOfSpaceBetweenCharElements(Integer.parseInt(lengthOfSpaceBetweenCharElements.getText()) * MorseSettings.getDitLength());
-		MorseSettings.setKeyingSpeed(Integer.parseInt(keyingSpeed.getText()));
-		MorseSettings.setDitLength(Integer.parseInt(ditLength.getText()));
-		MorseSettings.setDahLength(Integer.parseInt(dahLength.getText()));
-		MorseSettings.setFrequency(Integer.parseInt(frequency.getText()));
-		MorseSettings.setVolume(Float.parseFloat(volume.getText()) / 100.0f);
-		MorseSettings.setPool(charPool.getSelectionModel().getSelectedItem().toCharArray());
+		MorseSettings.getProperties().setProperty("pauseBeforeKeying", pauseBeforeKeying.getText());
+		MorseSettings.getProperties().setProperty("lengthOfSpaceBetweenCharacters",
+				String.valueOf(Integer.parseInt(lengthOfSpaceBetweenCharacters.getText())
+						* Integer.parseInt(MorseSettings.getProperties().getProperty("dotLength"))));
+		MorseSettings.getProperties().setProperty("lengthOfSpaceBetweenWords",
+				String.valueOf(Integer.parseInt(lengthOfSpaceBetweenWords.getText())
+						* Integer.parseInt(MorseSettings.getProperties().getProperty("dotLength"))));
+		MorseSettings.getProperties().setProperty("lengthOfSpaceBetweenCharElements",
+				String.valueOf(Integer.parseInt(lengthOfSpaceBetweenCharElements.getText())
+						* Integer.parseInt(MorseSettings.getProperties().getProperty("dotLength"))));
+		MorseSettings.getProperties().setProperty("keyingSpeed", keyingSpeed.getText());
+		MorseSettings.getProperties().setProperty("dotLength", dotLength.getText());
+		MorseSettings.getProperties().setProperty("dashLength", dashLength.getText());
+		MorseSettings.getProperties().setProperty("frequency", frequency.getText());
+		MorseSettings.getProperties().setProperty("volume", String.valueOf(Integer.parseInt(volume.getText()) / 100.0f));
+		MorseSettings.getProperties().setProperty("charPool", charPool.getSelectionModel().getSelectedItem());
 		// get a handle to the stage
 		Stage stage = (Stage) closeButton.getScene().getWindow();
 		// do what you have to do

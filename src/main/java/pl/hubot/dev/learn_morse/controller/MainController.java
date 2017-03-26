@@ -2,7 +2,6 @@ package pl.hubot.dev.learn_morse.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
@@ -14,34 +13,24 @@ import pl.hubot.dev.learn_morse.model.MorseString;
 
 import javax.sound.sampled.LineUnavailableException;
 import java.io.IOException;
-import java.net.URL;
 import java.util.Random;
-import java.util.ResourceBundle;
 
 /**
  * Controller class for resource view/Main.fxml.
  */
-public class MainController implements Initializable {
+public class MainController {
 	@FXML public TextArea txt_input;
 	@FXML public TextArea txt_output;
 
 	/**
 	 * Initialize controller.
-	 * @param location location
-	 * @param resources resources
 	 */
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
+	public MainController() {
 		try {
 			MorseSettings.load();
 		} catch (IOException ex) {
 			ErrorHandler.handleException(ex);
 		}
-	}
-
-	@Override
-	public void finalize() {
-		MorseSettings.unload();
 	}
 
 	/**
@@ -75,7 +64,7 @@ public class MainController implements Initializable {
 	public void train() throws LineUnavailableException, InterruptedException {
 		new Thread(() -> {
 			try {
-				char[] pool = MorseSettings.getPool();
+				char[] pool = MorseSettings.getProperties().getProperty("pool").toCharArray();
 				StringBuilder randomCharacters = new StringBuilder();
 				for (int i = 0; i < 5; i++) {
 					for (int j = 0; j < 4; j++) {

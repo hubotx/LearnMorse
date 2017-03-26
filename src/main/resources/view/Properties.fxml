@@ -12,8 +12,8 @@
       <Button layoutX="388.0" layoutY="344.0" mnemonicParsing="false" onAction="#ok" prefHeight="33.0" prefWidth="98.0" text="OK" />
       <Label layoutX="14.0" layoutY="19.0" text="Pause before keying:" />
       <Label layoutX="15.0" layoutY="52.0" text="Keying speed:" />
-      <Label layoutX="15.0" layoutY="84.0" prefHeight="16.0" prefWidth="73.0" text="Dit length:" />
-      <Label layoutX="14.0" layoutY="117.0" prefHeight="16.0" prefWidth="80.0" text="Dah length:" />
+      <Label layoutX="15.0" layoutY="84.0" prefHeight="16.0" prefWidth="73.0" text="Dot length:" />
+      <Label layoutX="14.0" layoutY="117.0" prefHeight="16.0" prefWidth="80.0" text="Dash length:" />
       <Label layoutX="14.0" layoutY="149.0" prefHeight="16.0" prefWidth="274.0" text="Length of space between two characters:" />
       <Label layoutX="15.0" layoutY="180.0" prefHeight="16.0" prefWidth="244.0" text="Length of space between two words:" />
       <Label layoutX="14.0" layoutY="211.0" text="Length of space between char elements:" />
@@ -21,8 +21,8 @@
       <Label layoutX="15.0" layoutY="270.0" text="Volume:" />
       <TextField fx:id="pauseBeforeKeying" layoutX="295.0" layoutY="14.0" prefHeight="26.0" prefWidth="54.0" />
       <TextField fx:id="keyingSpeed" layoutX="295.0" layoutY="47.0" prefHeight="26.0" prefWidth="54.0" />
-      <TextField fx:id="ditLength" layoutX="295.0" layoutY="79.0" prefHeight="26.0" prefWidth="54.0" />
-      <TextField fx:id="dahLength" layoutX="295.0" layoutY="112.0" prefHeight="26.0" prefWidth="54.0" />
+      <TextField fx:id="dotLength" layoutX="295.0" layoutY="79.0" prefHeight="26.0" prefWidth="54.0" />
+      <TextField fx:id="dashLength" layoutX="295.0" layoutY="112.0" prefHeight="26.0" prefWidth="54.0" />
       <TextField fx:id="lengthOfSpaceBetweenCharacters" layoutX="295.0" layoutY="144.0" prefHeight="26.0" prefWidth="54.0" />
       <TextField fx:id="lengthOfSpaceBetweenWords" layoutX="295.0" layoutY="175.0" prefHeight="26.0" prefWidth="54.0" />
       <TextField fx:id="lengthOfSpaceBetweenCharElements" layoutX="295.0" layoutY="206.0" prefHeight="26.0" prefWidth="54.0" />
