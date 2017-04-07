@@ -15,5 +15,6 @@ public class ErrorHandler {
 		alert.setTitle("Error");
 		alert.setContentText(ex.getLocalizedMessage());
 		alert.showAndWait();
+		System.out.println(ex.getMessage());
 	}
 }

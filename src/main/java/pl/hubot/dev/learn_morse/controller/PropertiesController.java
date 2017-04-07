@@ -6,9 +6,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import pl.hubot.dev.learn_morse.ErrorHandler;
 import pl.hubot.dev.learn_morse.model.CharPool;
-import pl.hubot.dev.learn_morse.model.MorseSettings;
+import pl.hubot.dev.learn_morse.model.Settings;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -28,6 +30,11 @@ public class PropertiesController implements Initializable {
 	@FXML private ComboBox<String> charPool;
 	@FXML private Button closeButton;
 
+	private Settings settings = Settings.getInstance();
+
+	public PropertiesController() throws IllegalAccessException, NoSuchFieldException, IOException {
+	}
+
 	/**
 	 * Initialize controller.
 	 * @param location location
@@ -35,31 +42,28 @@ public class PropertiesController implements Initializable {
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		pauseBeforeKeying.setText(MorseSettings.getProperties().getProperty("pauseBeforeKeying"));
-		keyingSpeed.setText(MorseSettings.getProperties().getProperty("keyingSpeed"));
-		dotLength.setText(MorseSettings.getProperties().getProperty("dotLength"));
-		dashLength.setText(MorseSettings.getProperties().getProperty("dashLength"));
+		pauseBeforeKeying.setText(String.valueOf(settings.getPauseBeforeKeying()));
+		keyingSpeed.setText(String.valueOf(settings.getKeyingSpeed()));
+		dotLength.setText(String.valueOf(settings.getDotLength()));
+		dashLength.setText(String.valueOf(settings.getDashLength()));
 		lengthOfSpaceBetweenCharacters.setText(String.valueOf(
-				Integer.parseInt(MorseSettings.getProperties().getProperty("lengthOfSpaceBetweenCharacters"))
-				/ Integer.parseInt(MorseSettings.getProperties().getProperty("dotLength"))));
+				settings.getLengthOfSpaceBetweenCharacters() / settings.getDotLength()));
 		lengthOfSpaceBetweenWords.setText(String.valueOf(
-				Integer.parseInt(MorseSettings.getProperties().getProperty("lengthOfSpaceBetweenWords"))
-						/ Integer.parseInt(MorseSettings.getProperties().getProperty("dotLength"))));
+				settings.getLengthOfSpaceBetweenWords() / settings.getDotLength()));
 		lengthOfSpaceBetweenCharElements.setText(String.valueOf(
-				Integer.parseInt(MorseSettings.getProperties().getProperty("lengthOfSpaceBetweenCharElements"))
-						/ Integer.parseInt(MorseSettings.getProperties().getProperty("dotLength"))));
-		frequency.setText(MorseSettings.getProperties().getProperty("frequency"));
-		volume.setText(String.valueOf(Float.parseFloat(MorseSettings.getProperties().getProperty("volume")) * 100.0f));
+				settings.getLengthOfSpaceBetweenCharElements() / settings.getDotLength()));
+		frequency.setText(String.valueOf(settings.getFrequency()));
+		volume.setText(String.valueOf(Float.parseFloat(String.valueOf(settings.getVolume() * 100.0f))));
 
-		charPool.getItems().add(String.valueOf(CharPool.englishSet));
-		charPool.getItems().add(String.valueOf(CharPool.polishSet));
-		charPool.getItems().add(String.valueOf(CharPool.digits));
-		charPool.getItems().add(String.valueOf(CharPool.alphanumeric));
-		charPool.getItems().add(String.valueOf(CharPool.polishAlphanumeric));
-		charPool.getItems().add(String.valueOf(CharPool.symbols));
-		charPool.getItems().add(String.valueOf(CharPool.fullCharacterSet));
+		charPool.getItems().add(String.valueOf(CharPool.ENGLISH_SET));
+		charPool.getItems().add(String.valueOf(CharPool.POLISH_SET));
+		charPool.getItems().add(String.valueOf(CharPool.DIGITS));
+		charPool.getItems().add(String.valueOf(CharPool.ALPHANUMERIC));
+		charPool.getItems().add(String.valueOf(CharPool.POLISH_ALPHANUMERIC));
+		charPool.getItems().add(String.valueOf(CharPool.SYMBOLS));
+		charPool.getItems().add(String.valueOf(CharPool.FULL_CHARACTER_SET));
 
-		charPool.getSelectionModel().select(String.valueOf(MorseSettings.getProperties().getProperty("pool")));
+		charPool.getSelectionModel().select(String.valueOf(settings.getPool()));
 	}
 
 	/**
@@ -76,26 +80,29 @@ public class PropertiesController implements Initializable {
 	 * Apply changes.
 	 */
 	public void ok() {
-		// set properties
-		MorseSettings.getProperties().setProperty("pauseBeforeKeying", pauseBeforeKeying.getText());
-		MorseSettings.getProperties().setProperty("lengthOfSpaceBetweenCharacters",
-				String.valueOf(Integer.parseInt(lengthOfSpaceBetweenCharacters.getText())
-						* Integer.parseInt(MorseSettings.getProperties().getProperty("dotLength"))));
-		MorseSettings.getProperties().setProperty("lengthOfSpaceBetweenWords",
-				String.valueOf(Integer.parseInt(lengthOfSpaceBetweenWords.getText())
-						* Integer.parseInt(MorseSettings.getProperties().getProperty("dotLength"))));
-		MorseSettings.getProperties().setProperty("lengthOfSpaceBetweenCharElements",
-				String.valueOf(Integer.parseInt(lengthOfSpaceBetweenCharElements.getText())
-						* Integer.parseInt(MorseSettings.getProperties().getProperty("dotLength"))));
-		MorseSettings.getProperties().setProperty("keyingSpeed", keyingSpeed.getText());
-		MorseSettings.getProperties().setProperty("dotLength", dotLength.getText());
-		MorseSettings.getProperties().setProperty("dashLength", dashLength.getText());
-		MorseSettings.getProperties().setProperty("frequency", frequency.getText());
-		MorseSettings.getProperties().setProperty("volume", String.valueOf(Integer.parseInt(volume.getText()) / 100.0f));
-		MorseSettings.getProperties().setProperty("charPool", charPool.getSelectionModel().getSelectedItem());
-		// get a handle to the stage
-		Stage stage = (Stage) closeButton.getScene().getWindow();
-		// do what you have to do
-		stage.close();
+		try {
+			// set properties
+			settings.setPauseBeforeKeying(Integer.parseInt(pauseBeforeKeying.getText()));
+			settings.setLengthOfSpaceBetweenCharacters(
+					Integer.parseInt(lengthOfSpaceBetweenCharacters.getText()) * settings.getDotLength());
+			settings.setLengthOfSpaceBetweenWords(
+					Integer.parseInt(lengthOfSpaceBetweenWords.getText()) * settings.getDotLength());
+			settings.setLengthOfSpaceBetweenCharElements(
+					Integer.parseInt(lengthOfSpaceBetweenCharElements.getText()) * settings.getDotLength());
+			settings.setKeyingSpeed(Integer.parseInt(keyingSpeed.getText()));
+			settings.setDotLength(Integer.parseInt(dotLength.getText()));
+			settings.setDashLength(Integer.parseInt(dashLength.getText()));
+			settings.setFrequency(Integer.parseInt(frequency.getText()));
+			settings.setVolume(Float.parseFloat(volume.getText()) / 100.0f);
+			settings.setPool(charPool.getSelectionModel().getSelectedItem());
+			settings.apply();
+		} catch (IllegalAccessException | NumberFormatException ex) {
+			ErrorHandler.handleException(ex);
+		} finally {
+			// get a handle to the stage
+			Stage stage = (Stage) closeButton.getScene().getWindow();
+			// do what you have to do
+			stage.close();
+		}
 	}
 }

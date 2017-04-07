@@ -4,11 +4,11 @@ package pl.hubot.dev.learn_morse.model;
  * Training character pool.
  */
 public class CharPool {
-	public static final char[] englishSet = "abcdefghijklmnopqrstuvwxyz".toCharArray();
-	public static final char[] polishSet = (String.valueOf(englishSet) + "ąćęłńóśźż").toCharArray();
-	public static final char[] digits = "1234567890".toCharArray();
-	public static final char[] alphanumeric = (String.valueOf(englishSet) + String.valueOf(digits)).toCharArray();
-	public static final char[] polishAlphanumeric = (String.valueOf(polishSet) + String.valueOf(digits)).toCharArray();
-	public static final char[] symbols = ".,'\"_:;?!-+/()=@".toCharArray();
-	public static final char[] fullCharacterSet = (String.valueOf(polishAlphanumeric) + String.valueOf(symbols)).toCharArray();
+	public static final String ENGLISH_SET = "abcdefghijklmnopqrstuvwxyz";
+	public static final String POLISH_SET = ENGLISH_SET + "ąćęłńóśźż";
+	public static final String DIGITS = "1234567890";
+	public static final String ALPHANUMERIC = ENGLISH_SET + DIGITS;
+	public static final String POLISH_ALPHANUMERIC = POLISH_SET + DIGITS;
+	public static final String SYMBOLS = ".,'\"_:;?!-+/()=@";
+	public static final String FULL_CHARACTER_SET = POLISH_ALPHANUMERIC + SYMBOLS;
 }

@@ -7,9 +7,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 import pl.hubot.dev.learn_morse.ErrorHandler;
-import pl.hubot.dev.learn_morse.model.MorseCode;
-import pl.hubot.dev.learn_morse.model.MorseSettings;
-import pl.hubot.dev.learn_morse.model.MorseString;
+import pl.hubot.dev.learn_morse.model.Encoder;
+import pl.hubot.dev.learn_morse.model.Transmitter;
+import pl.hubot.dev.learn_morse.model.Settings;
 
 import javax.sound.sampled.LineUnavailableException;
 import java.io.IOException;
@@ -22,13 +22,15 @@ public class MainController {
 	@FXML public TextArea txt_input;
 	@FXML public TextArea txt_output;
 
+	private Settings settings;
+
 	/**
 	 * Initialize controller.
 	 */
 	public MainController() {
 		try {
-			MorseSettings.load();
-		} catch (IOException ex) {
+			settings = Settings.getInstance();
+		} catch (IllegalAccessException | NoSuchFieldException | IOException ex) {
 			ErrorHandler.handleException(ex);
 		}
 	}
@@ -37,34 +39,36 @@ public class MainController {
 	 * Receive Morse code.
 	 */
 	public void receive() {
-		new Thread(() -> txt_output.setText(MorseCode.decode(txt_input.getText()))).start();
+		new Thread(() -> {
+			try {
+				txt_output.setText(new Encoder().decode(txt_input.getText()));
+			} catch (IOException | NoSuchFieldException ex) {
+				ErrorHandler.handleException(ex);
+			}
+		}).start();
 	}
 
 	/**
 	 * Transmit Morse code.
-	 * @throws LineUnavailableException caused by sound(...) method
-	 * @throws InterruptedException caused by Thread.Sleep(...)
 	 */
-	public void transmit() throws LineUnavailableException, InterruptedException {
+	public void transmit() {
 		new Thread(() -> {
 			try {
-				MorseString.transmit(txt_input.getText());
-			} catch (LineUnavailableException | InterruptedException ex) {
+				new Transmitter().transmit(txt_input.getText());
+				txt_output.setText(new Encoder().encode(txt_input.getText()));
+			} catch (LineUnavailableException | IOException | NoSuchFieldException | IllegalAccessException | InterruptedException ex) {
 				ErrorHandler.handleException(ex);
 			}
-			txt_output.setText(MorseCode.encode(txt_input.getText()));
 		}).start();
 	}
 
 	/**
 	 * Perform knowledge training of Morse.
-	 * @throws LineUnavailableException caused by sound(...) method
-	 * @throws InterruptedException caused by Thread.Sleep(...)
 	 */
-	public void train() throws LineUnavailableException, InterruptedException {
+	public void train() {
 		new Thread(() -> {
 			try {
-				char[] pool = MorseSettings.getProperties().getProperty("pool").toCharArray();
+				char[] pool = settings.getPool().toCharArray();
 				StringBuilder randomCharacters = new StringBuilder();
 				for (int i = 0; i < 5; i++) {
 					for (int j = 0; j < 4; j++) {
@@ -73,10 +77,10 @@ public class MainController {
 					}
 					randomCharacters.append(' ');
 				}
-				MorseString.transmit(randomCharacters.toString());
+				new Transmitter().transmit(randomCharacters.toString());
 				// TODO: implement checking results of training
 			}
-			catch (LineUnavailableException | InterruptedException ex) {
+			catch (LineUnavailableException | NoSuchFieldException | IOException | IllegalAccessException | InterruptedException ex) {
 				ErrorHandler.handleException(ex);
 			}
 		}).start();
