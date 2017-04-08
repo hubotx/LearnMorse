@@ -1,6 +1,7 @@
 package pl.hubot.dev.learn_morse.controller;
 
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -10,11 +11,13 @@ import pl.hubot.dev.learn_morse.model.CharPool;
 import pl.hubot.dev.learn_morse.model.Settings;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 /**
  * Controller class for resource view/Properties.fxml.
  */
-public class PropertiesController {
+public class PropertiesController implements Initializable {
     /**
      * Pause before keying.
      */
@@ -87,56 +90,104 @@ public class PropertiesController {
     private Settings settings = Settings.getInstance();
 
     /**
-     * Initialize controller.
-     *
-     * @throws IllegalAccessException IllegalAccessException
-     * @throws NoSuchFieldException   NoSuchFieldException
-     * @throws IOException            IOException
+     * Maximum volume (100%).
      */
-    public PropertiesController()
-            throws IllegalAccessException,
-            NoSuchFieldException,
-            IOException {
-        pauseBeforeKeying.setText(String.valueOf(
-                settings.getPauseBeforeKeying()));
-        keyingSpeed.setText(String.valueOf(
-                settings.getKeyingSpeed()));
-        dotLength.setText(String.valueOf(
-                settings.getDotLength()));
-        dashLength.setText(String.valueOf(
-                settings.getDashLength()));
-        lengthOfSpaceBetweenCharacters.setText(String.valueOf(
-                settings.getLengthOfSpaceBetweenCharacters()
-                        / settings.getDotLength()));
-        lengthOfSpaceBetweenWords.setText(String.valueOf(
-                settings.getLengthOfSpaceBetweenWords()
-                        / settings.getDotLength()));
-        lengthOfSpaceBetweenCharElements.setText(String.valueOf(
-                settings.getLengthOfSpaceBetweenCharElements()
-                        / settings.getDotLength()));
-        frequency.setText(String.valueOf(settings.getFrequency()));
-        volume.setText(String.valueOf(
-                Float.parseFloat(
-                        String.valueOf(settings.getVolume()
-                                * maxVolume))));
+    private float maxVolume = 100.0f;
 
-        charPool.getItems().add(
-                String.valueOf(CharPool.ENGLISH_SET));
-        charPool.getItems().add(
-                String.valueOf(CharPool.POLISH_SET));
-        charPool.getItems().add(
-                String.valueOf(CharPool.DIGITS));
-        charPool.getItems().add(
-                String.valueOf(CharPool.ALPHANUMERIC));
-        charPool.getItems().add(
-                String.valueOf(CharPool.POLISH_ALPHANUMERIC));
-        charPool.getItems().add(
-                String.valueOf(CharPool.SYMBOLS));
-        charPool.getItems().add(
-                String.valueOf(CharPool.FULL_CHARACTER_SET));
+    /**
+     * Constructor.
+     * @throws IllegalAccessException IllegalAccessException
+     * @throws NoSuchFieldException NoSuchFieldException
+     * @throws IOException IOException
+     */
+    public PropertiesController() throws IllegalAccessException, NoSuchFieldException, IOException {
+    }
 
-        charPool.getSelectionModel()
-                .select(String.valueOf(settings.getPool()));
+    /**
+     * Initialize controller.
+     */
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+            pauseBeforeKeying.setText(String.valueOf(
+                    settings.getPauseBeforeKeying()));
+            keyingSpeed.setText(String.valueOf(
+                    settings.getKeyingSpeed()));
+            dotLength.setText(String.valueOf(
+                    settings.getDotLength()));
+            dashLength.setText(String.valueOf(
+                    settings.getDashLength()));
+            lengthOfSpaceBetweenCharacters.setText(String.valueOf(
+                    settings.getLengthOfSpaceBetweenCharacters()
+                            / settings.getDotLength()));
+            lengthOfSpaceBetweenWords.setText(String.valueOf(
+                    settings.getLengthOfSpaceBetweenWords()
+                            / settings.getDotLength()));
+            lengthOfSpaceBetweenCharElements.setText(String.valueOf(
+                    settings.getLengthOfSpaceBetweenCharElements()
+                            / settings.getDotLength()));
+            frequency.setText(String.valueOf(settings.getFrequency()));
+            volume.setText(String.valueOf(
+                    Float.parseFloat(
+                            String.valueOf(settings.getVolume()
+                                    * maxVolume))));
+
+            charPool.getItems().add(
+                    String.valueOf(CharPool.ENGLISH_SET));
+            charPool.getItems().add(
+                    String.valueOf(CharPool.POLISH_SET));
+            charPool.getItems().add(
+                    String.valueOf(CharPool.DIGITS));
+            charPool.getItems().add(
+                    String.valueOf(CharPool.ALPHANUMERIC));
+            charPool.getItems().add(
+                    String.valueOf(CharPool.POLISH_ALPHANUMERIC));
+            charPool.getItems().add(
+                    String.valueOf(CharPool.SYMBOLS));
+            charPool.getItems().add(
+                    String.valueOf(CharPool.FULL_CHARACTER_SET));
+
+            charPool.getSelectionModel()
+                    .select(String.valueOf(settings.getPool()));
+            pauseBeforeKeying.setText(String.valueOf(
+                    settings.getPauseBeforeKeying()));
+            keyingSpeed.setText(String.valueOf(
+                    settings.getKeyingSpeed()));
+            dotLength.setText(String.valueOf(
+                    settings.getDotLength()));
+            dashLength.setText(String.valueOf(
+                    settings.getDashLength()));
+            lengthOfSpaceBetweenCharacters.setText(String.valueOf(
+                    settings.getLengthOfSpaceBetweenCharacters()
+                            / settings.getDotLength()));
+            lengthOfSpaceBetweenWords.setText(String.valueOf(
+                    settings.getLengthOfSpaceBetweenWords()
+                            / settings.getDotLength()));
+            lengthOfSpaceBetweenCharElements.setText(String.valueOf(
+                    settings.getLengthOfSpaceBetweenCharElements()
+                            / settings.getDotLength()));
+            frequency.setText(String.valueOf(settings.getFrequency()));
+            volume.setText(String.valueOf(
+                    Float.parseFloat(
+                            String.valueOf(settings.getVolume()
+                                    * maxVolume))));
+
+            charPool.getItems().add(
+                    String.valueOf(CharPool.ENGLISH_SET));
+            charPool.getItems().add(
+                    String.valueOf(CharPool.POLISH_SET));
+            charPool.getItems().add(
+                    String.valueOf(CharPool.DIGITS));
+            charPool.getItems().add(
+                    String.valueOf(CharPool.ALPHANUMERIC));
+            charPool.getItems().add(
+                    String.valueOf(CharPool.POLISH_ALPHANUMERIC));
+            charPool.getItems().add(
+                    String.valueOf(CharPool.SYMBOLS));
+            charPool.getItems().add(
+                    String.valueOf(CharPool.FULL_CHARACTER_SET));
+
+            charPool.getSelectionModel()
+                    .select(String.valueOf(settings.getPool()));
     }
 
     /**
@@ -195,9 +246,4 @@ public class PropertiesController {
             stage.close();
         }
     }
-
-    /**
-     * Maximum volume (100%).
-     */
-    private final float maxVolume = 100.0f;
 }

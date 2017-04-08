@@ -1,5 +1,7 @@
 package pl.hubot.dev.learn_morse.model;
 
+import pl.hubot.dev.learn_morse.util.ErrorHandler;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;

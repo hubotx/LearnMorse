@@ -9,7 +9,7 @@ import java.io.IOException;
 /**
  * A class that is responding from buzzer sound and transmitting Morse signals.
  */
-class Keyer {
+public class Keyer {
     /**
      * Application settings.
      */
@@ -22,7 +22,7 @@ class Keyer {
      * @throws NoSuchFieldException   NoSuchFieldException
      * @throws IOException            IOException
      */
-    Keyer()
+    public Keyer()
             throws IllegalAccessException,
             NoSuchFieldException,
             IOException {
@@ -92,7 +92,7 @@ class Keyer {
      * @param duration duration
      * @throws LineUnavailableException LineUnavailableException
      */
-    private void tone(final int duration) throws LineUnavailableException {
+    public void tone(final int duration) throws LineUnavailableException {
         byte[] buffer = new byte[duration * Byte.SIZE];
         final int samplingFrequencyInHz = 8000;
         for (int i = 0; i < buffer.length; i++) {
@@ -115,7 +115,7 @@ class Keyer {
                             / numberOfFadeSamples);
         }
         AudioFormat audioFormat = new AudioFormat(
-                numberOfFadeSamples, Byte.SIZE,
+                samplingFrequencyInHz, Byte.SIZE,
                 1, true, false);
         SourceDataLine sourceDataLine =
                 AudioSystem.getSourceDataLine(audioFormat);

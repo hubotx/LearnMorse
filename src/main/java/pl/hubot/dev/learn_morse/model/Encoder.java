@@ -3,11 +3,7 @@ package pl.hubot.dev.learn_morse.model;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Properties;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -31,12 +27,7 @@ public class Encoder {
             char current = lowerCaseInput.charAt(i);
             encoded.append(getMorseCode().getOrDefault(
                     Character.toString(current), " "));
-            encoded.append(" ");
-            if (current == ' ') {
-                encoded.append("       ");
-            } else {
-                encoded.append("   ");
-            }
+            encoded.append("   ");
         }
         return encoded.toString();
     }
@@ -55,10 +46,9 @@ public class Encoder {
         StringBuilder decoded = new StringBuilder();
         String lowerCaseInput = input.toLowerCase();
         for (String current : lowerCaseInput.split(" ")) {
-            if (getKeysByValue(getMorseCode(), current).toArray().length != 0) {
-                decoded.append(getKeysByValue(
-                        getMorseCode(), current)
-                        .toArray()[0]);
+            String key = getKeysByValue(getMorseCode(), current);
+            if (key != null) {
+                decoded.append(key);
             }
             decoded.append(" ");
         }
@@ -108,14 +98,12 @@ public class Encoder {
      * @param <E>   type of value
      * @return keys by value
      */
-    private <T, E> Set<T> getKeysByValue(
-            final Map<T, E> map,
-            final E value) {
-        return map.entrySet()
-                .stream()
-                .filter(entry -> Objects.equals(
-                        entry.getValue(), value))
-                .map(Map.Entry::getKey)
-                .collect(Collectors.toSet());
+    private <T, E> T getKeysByValue(Map<T, E> map, E value) {
+        for (Map.Entry<T, E> entry : map.entrySet()) {
+            if (Objects.equals(value, entry.getValue())) {
+                return entry.getKey();
+            }
+        }
+        return null;
     }
 }

@@ -2,6 +2,7 @@ package pl.hubot.dev.learn_morse.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
@@ -13,12 +14,14 @@ import pl.hubot.dev.learn_morse.model.Settings;
 
 import javax.sound.sampled.LineUnavailableException;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Random;
+import java.util.ResourceBundle;
 
 /**
  * Controller class for resource view/Main.fxml.
  */
-public class MainController {
+public class MainController implements Initializable {
     /**
      * Input text.
      */
@@ -37,7 +40,8 @@ public class MainController {
     /**
      * Initialize controller.
      */
-    public MainController() {
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
         try {
             settings = Settings.getInstance();
         } catch (IllegalAccessException
