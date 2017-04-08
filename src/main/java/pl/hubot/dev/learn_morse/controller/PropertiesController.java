@@ -8,7 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import pl.hubot.dev.learn_morse.util.ErrorHandler;
 import pl.hubot.dev.learn_morse.model.CharPool;
-import pl.hubot.dev.learn_morse.model.Settings;
+import pl.hubot.dev.learn_morse.util.Settings;
 
 import java.io.IOException;
 import java.net.URL;

@@ -1,5 +1,7 @@
 package pl.hubot.dev.learn_morse.model;
 
+import pl.hubot.dev.learn_morse.util.Settings;
+
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.LineUnavailableException;

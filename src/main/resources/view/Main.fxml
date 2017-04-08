@@ -7,31 +7,30 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane prefHeight="400.0" prefWidth="600.0" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.hubot.dev.learn_morse.controller.MainController">
+<BorderPane prefHeight="400.0" prefWidth="600.0" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.hubot.dev.learn_morse.controller.MainController">
    <top>
        <MenuBar BorderPane.alignment="CENTER">
            <Menu mnemonicParsing="false" text="File">
-               <MenuItem mnemonicParsing="false" onAction="#changeProperties" text="Properties"/>
-               <MenuItem mnemonicParsing="false" text="Close"/>
+               <MenuItem mnemonicParsing="false" onAction="#changeProperties" text="Properties" />
+               <MenuItem mnemonicParsing="false" text="Close" />
            </Menu>
            <Menu mnemonicParsing="false" text="Edit">
-               <MenuItem mnemonicParsing="false" text="Delete"/>
+               <MenuItem mnemonicParsing="false" text="Delete" />
            </Menu>
            <Menu mnemonicParsing="false" text="Procedures">
-               <MenuItem mnemonicParsing="false" onAction="#transmit" text="Transmit"/>
-               <MenuItem mnemonicParsing="false" onAction="#receive" text="Receive"/>
-               <MenuItem mnemonicParsing="false" onAction="#train" text="Train Morse"/>
+               <MenuItem mnemonicParsing="false" onAction="#transmit" text="Transmit" />
+               <MenuItem mnemonicParsing="false" onAction="#receive" text="Receive" />
+               <MenuItem mnemonicParsing="false" onAction="#train" text="Blocks method" />
            </Menu>
            <Menu mnemonicParsing="false" text="Help">
-               <MenuItem mnemonicParsing="false" text="About"/>
+               <MenuItem mnemonicParsing="false" text="About" />
            </Menu>
        </MenuBar>
    </top>
    <center>
-       <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0"
-                  BorderPane.alignment="CENTER">
-           <TextArea fx:id="txtOutput" editable="false" prefHeight="200.0" prefWidth="200.0"/>
-           <TextArea fx:id="txtInput" prefHeight="200.0" prefWidth="200.0"/>
+       <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" BorderPane.alignment="CENTER">
+           <TextArea fx:id="txtOutput" editable="false" prefHeight="200.0" prefWidth="200.0" />
+           <TextArea fx:id="txtInput" prefHeight="200.0" prefWidth="200.0" />
        </SplitPane>
    </center>
 </BorderPane>

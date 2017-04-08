@@ -1,22 +1,25 @@
 package pl.hubot.dev.learn_morse.controller;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
+import pl.hubot.dev.learn_morse.model.Transmitter;
 import pl.hubot.dev.learn_morse.util.ErrorHandler;
 import pl.hubot.dev.learn_morse.model.Encoder;
-import pl.hubot.dev.learn_morse.model.Transmitter;
-import pl.hubot.dev.learn_morse.model.Settings;
+import pl.hubot.dev.learn_morse.util.Settings;
 
 import javax.sound.sampled.LineUnavailableException;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Random;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Controller class for resource view/Main.fxml.
@@ -38,12 +41,18 @@ public class MainController implements Initializable {
     private Settings settings;
 
     /**
+     * Transmitter.
+     */
+    private Transmitter transmitter;
+
+    /**
      * Initialize controller.
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
             settings = Settings.getInstance();
+            transmitter = new Transmitter();
         } catch (IllegalAccessException
                 | NoSuchFieldException
                 | IOException ex) {
@@ -70,7 +79,7 @@ public class MainController implements Initializable {
     public final void transmit() {
         new Thread(() -> {
             try {
-                new Transmitter().transmit(txtInput.getText());
+                transmitter.transmit(txtInput.getText());
                 txtOutput.setText(new Encoder().encode(txtInput.getText()));
             } catch (LineUnavailableException
                     | IOException
@@ -86,20 +95,14 @@ public class MainController implements Initializable {
      * Perform knowledge training of Morse.
      */
     public final void train() {
-        new Thread(() -> {
+        ExecutorService executor = Executors.newFixedThreadPool(1, runnable -> {
+            Thread t = new Thread(runnable);
+            t.setDaemon(true);
+            return t;
+        });
+        executor.execute(() -> {
             try {
-                char[] pool = settings.getPool().toCharArray();
-                StringBuilder randomCharacters = new StringBuilder();
-                final byte words = 5;
-                final byte chars = 4;
-                for (int wordIndex = 0; wordIndex < words; wordIndex++) {
-                    for (int charIndex = 0; charIndex < chars; charIndex++) {
-                        char curr = pool[new Random().nextInt(pool.length)];
-                        randomCharacters.append(curr);
-                    }
-                    randomCharacters.append(' ');
-                }
-                new Transmitter().transmit(randomCharacters.toString());
+                transmitter.blocksMethod();
             } catch (LineUnavailableException
                     | NoSuchFieldException
                     | IOException
@@ -107,7 +110,33 @@ public class MainController implements Initializable {
                     | InterruptedException ex) {
                 ErrorHandler.handleException(ex);
             }
-        }).start();
+        });
+        executor.execute(() -> {
+            Platform.runLater(() -> {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Are you ready?");
+                alert.setContentText("Click OK to verify.");
+                alert.showAndWait();
+                if (txtInput.getText().equals(transmitter.getTransmitted())) {
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setHeaderText("Success");
+                    alert.setContentText("You're right!");
+                    alert.showAndWait();
+                } else {
+                    alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setHeaderText("Fail");
+                    alert.setContentText("You failed!");
+                    alert.showAndWait();
+                }
+            });
+        });
+        executor.shutdown();
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println(transmitter.getTransmitted());
     }
 
     /**

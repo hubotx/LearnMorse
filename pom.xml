@@ -33,11 +33,11 @@
       <artifactId>junit</artifactId>
       <version>4.12</version>
     </dependency>
-    <!-- https://mvnrepository.com/artifact/commons-collections/commons-collections -->
+    <!-- https://mvnrepository.com/artifact/net.sf.sociaal/freetts -->
     <dependency>
-      <groupId>commons-collections</groupId>
-      <artifactId>commons-collections</artifactId>
-      <version>3.2.2</version>
+      <groupId>net.sf.sociaal</groupId>
+      <artifactId>freetts</artifactId>
+      <version>1.2.2</version>
     </dependency>
   </dependencies>
 </project>

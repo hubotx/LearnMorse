@@ -1,13 +1,24 @@
 package pl.hubot.dev.learn_morse.model;
 
+import pl.hubot.dev.learn_morse.util.Settings;
+
 import javax.sound.sampled.LineUnavailableException;
 import java.io.IOException;
 import java.util.Map;
+import java.util.Random;
 
 /**
- * Class purposed to provide basics functionality to transmit Morse code.
+ * Class purposed to provide basics functionality to transmit an Morse code.
  */
 public class Transmitter {
+    /**
+     * Settings.
+     */
+    private Settings settings = Settings.getInstance();
+
+    public Transmitter() throws IllegalAccessException, NoSuchFieldException, IOException {
+    }
+
     /**
      * Transmit Morse code.
      *
@@ -24,6 +35,7 @@ public class Transmitter {
             IOException,
             NoSuchFieldException,
             IllegalAccessException {
+        transmitted = input;
         Keyer keyer = new Keyer();
         keyer.pauseBeforeKeying();
         String lowerCaseInput = input.toLowerCase();
@@ -49,4 +61,38 @@ public class Transmitter {
             }
         }
     }
+
+    /**
+     * Train Morse code using blocks method.
+     * @throws LineUnavailableException LineUnavailableException
+     * @throws InterruptedException InterruptedException
+     * @throws IOException IOException
+     * @throws NoSuchFieldException NoSuchFieldException
+     * @throws IllegalAccessException IllegalAccessException
+     */
+    public final void blocksMethod()
+            throws LineUnavailableException,
+            InterruptedException,
+            IOException,
+            NoSuchFieldException,
+            IllegalAccessException {
+        char[] pool = settings.getPool().toCharArray();
+        StringBuilder randomCharacters = new StringBuilder();
+        final byte words = 5;
+        final byte chars = 4;
+        for (int wordIndex = 0; wordIndex < words; wordIndex++) {
+            for (int charIndex = 0; charIndex < chars; charIndex++) {
+                char curr = pool[new Random().nextInt(pool.length)];
+                randomCharacters.append(curr);
+            }
+            randomCharacters.append(' ');
+        }
+        transmit(randomCharacters.toString());
+    }
+
+    public String getTransmitted() {
+        return transmitted;
+    }
+
+    private String transmitted;
 }

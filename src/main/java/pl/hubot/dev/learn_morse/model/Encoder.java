@@ -1,10 +1,11 @@
 package pl.hubot.dev.learn_morse.model;
 
+import pl.hubot.dev.learn_morse.util.Settings;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Encoder class.
@@ -87,6 +88,35 @@ public class Encoder {
 
             return translations;
         }
+    }
+
+    public int getLengthOfEncoded(final String input) throws IOException, NoSuchFieldException, IllegalAccessException {
+        Settings settings = Settings.getInstance();
+        int lengthOfEncoded = 0;
+        String lowerCaseInput = input.toLowerCase();
+        for (int i = 0; i < lowerCaseInput.length(); i++) {
+            char current = lowerCaseInput.charAt(i);
+            Map<String, String> morseCode =
+                    new Encoder().getMorseCode();
+            String encodedCharacter = morseCode
+                    .getOrDefault(Character.toString(
+                            current), "");
+            for (int j = 0; j < encodedCharacter.length(); j++) {
+                char currentEnc = encodedCharacter.charAt(j);
+                if (currentEnc == '_') {
+                    lengthOfEncoded += 1200 * settings.getDashLength() / settings.getKeyingSpeed();
+                } else if (currentEnc == '.') {
+                    lengthOfEncoded += 1200 * settings.getDotLength() / settings.getDashLength();
+                }
+                lengthOfEncoded += settings.getLengthOfSpaceBetweenCharElements();
+            }
+            lengthOfEncoded += settings.getLengthOfSpaceBetweenCharacters();
+
+            if (current == ' ') {
+                lengthOfEncoded += settings.getLengthOfSpaceBetweenWords();
+            }
+        }
+        return lengthOfEncoded;
     }
 
     /**
