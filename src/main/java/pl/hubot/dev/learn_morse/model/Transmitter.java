@@ -15,7 +15,7 @@ public class Transmitter {
      * @throws LineUnavailableException LineUnavailableException
      * @throws InterruptedException     InterruptedException
      * @throws IOException              IOException
-     * @throws IllegalAccessException   IllegalAccessException
+     * @throws IllegalAccessException   IllegalAccessExcepti/on
      * @throws NoSuchFieldException     NoSuchFieldException
      */
     public final void transmit(final String input)
