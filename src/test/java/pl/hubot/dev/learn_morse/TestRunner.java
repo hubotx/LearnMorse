@@ -7,12 +7,18 @@ import org.junit.runner.notification.Failure;
 /**
  * Test runner.
  */
-public class TestRunner {
+public final class TestRunner {
+    /**
+     * Constructor.
+     */
+    private TestRunner() {
+    }
+
     /**
      * Entry point for test runner.
      * @param args command-line arguments
      */
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         Result result = JUnitCore.runClasses(EncodeTest.class);
 
         for (Failure failure : result.getFailures()) {
