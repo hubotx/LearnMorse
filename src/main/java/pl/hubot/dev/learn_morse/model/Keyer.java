@@ -8,92 +8,41 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 import java.io.IOException;
 
-/**
- * A class that is responding from buzzer sound and transmitting Morse signals.
- */
 public class Keyer {
-    /**
-     * Application settings.
-     */
     private Settings settings = Settings.getInstance();
 
-    /**
-     * Initialize Keyer.
-     *
-     * @throws IllegalAccessException IllegalAccessException
-     * @throws NoSuchFieldException   NoSuchFieldException
-     * @throws IOException            IOException
-     */
     public Keyer()
             throws IllegalAccessException,
             NoSuchFieldException,
             IOException {
     }
 
-    /**
-     * Transmit dash.
-     *
-     * @throws LineUnavailableException sound(...) method
-     * @throws InterruptedException     Thread.sleep(...) method
-     */
     final void dash() throws LineUnavailableException, InterruptedException {
         tone(settings.getDashLength());
         pauseCharElement();
     }
 
-    /**
-     * Transmit dot.
-     *
-     * @throws LineUnavailableException sound(...) method
-     * @throws InterruptedException     Thread.sleep(...) method
-     */
     final void dot() throws LineUnavailableException, InterruptedException {
         tone(settings.getDotLength());
         pauseCharElement();
     }
 
-    /**
-     * Make pause before keying.
-     *
-     * @throws InterruptedException Thread.sleep(...) method
-     */
     final void pauseBeforeKeying() throws InterruptedException {
         Thread.sleep(settings.getPauseBeforeKeying());
     }
 
-    /**
-     * Make pause between two char elements.
-     *
-     * @throws InterruptedException Thread.sleep(...) method
-     */
     private void pauseCharElement() throws InterruptedException {
         Thread.sleep(settings.getLengthOfSpaceBetweenCharElements());
     }
 
-    /**
-     * Make pause between two chars.
-     *
-     * @throws InterruptedException Thread.sleep(...) method
-     */
     final void pauseChar() throws InterruptedException {
         Thread.sleep(settings.getLengthOfSpaceBetweenCharacters());
     }
 
-    /**
-     * Make pause between two words.
-     *
-     * @throws InterruptedException Thread.sleep(...) method
-     */
     final void pauseWord() throws InterruptedException {
         Thread.sleep(settings.getLengthOfSpaceBetweenWords());
     }
 
-    /**
-     * Play sound with defined frequency by MorseSettings object.
-     *
-     * @param duration duration
-     * @throws LineUnavailableException LineUnavailableException
-     */
     private void tone(final int duration) throws LineUnavailableException {
         byte[] buffer = new byte[duration * Byte.SIZE];
         final int samplingFrequencyInHz = 8000;

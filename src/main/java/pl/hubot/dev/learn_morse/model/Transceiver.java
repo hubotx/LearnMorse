@@ -1,48 +1,41 @@
 package pl.hubot.dev.learn_morse.model;
 
+import pl.hubot.dev.learn_morse.util.ErrorHandler;
 import pl.hubot.dev.learn_morse.util.Settings;
+import pl.hubot.dev.learn_morse.util.SpeechUtils;
 
 import javax.sound.sampled.LineUnavailableException;
+import javax.speech.AudioException;
+import javax.speech.EngineException;
+import java.beans.PropertyVetoException;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Random;
 
-/**
- * Class purposed to provide basics functionality to transmit an Morse code.
- */
-public class Transmitter {
-    /**
-     * Settings.
-     */
+public class Transceiver {
     private Settings settings = Settings.getInstance();
-
-    /**
-     * Last transmitted string.
-     */
     private String transmitted;
+    private SpeechUtils speechUtils = new SpeechUtils();
 
-    /**
-     * Constructor.
-     * @throws IllegalAccessException IllegalAccessException
-     * @throws NoSuchFieldException NoSuchFieldException
-     * @throws IOException IOException
-     */
-    public Transmitter()
+    public Transceiver()
             throws IllegalAccessException,
             NoSuchFieldException,
-            IOException {
+            IOException,
+            AudioException,
+            EngineException,
+            PropertyVetoException {
+        speechUtils.init();
     }
 
-    /**
-     * Transmit Morse code.
-     *
-     * @param input input string
-     * @throws LineUnavailableException LineUnavailableException
-     * @throws InterruptedException     InterruptedException
-     * @throws IOException              IOException
-     * @throws IllegalAccessException   IllegalAccessExcepti/on
-     * @throws NoSuchFieldException     NoSuchFieldException
-     */
+    @Override
+    public final void finalize() {
+        try {
+            speechUtils.terminate();
+        } catch (EngineException ex) {
+            ErrorHandler.handleException(ex);
+        }
+    }
+
     public final void transmit(final String input)
             throws LineUnavailableException,
             InterruptedException,
@@ -77,13 +70,28 @@ public class Transmitter {
     }
 
     /**
-     * Train Morse code using blocks method.
-     * @throws LineUnavailableException LineUnavailableException
-     * @throws InterruptedException InterruptedException
+     * Receive Morse code.
+     * @param input input
+     * @return decoded Morse code
      * @throws IOException IOException
      * @throws NoSuchFieldException NoSuchFieldException
-     * @throws IllegalAccessException IllegalAccessException
+     * @throws AudioException AudioException
+     * @throws EngineException EngineException
+     * @throws PropertyVetoException PropertyVetoException
+     * @throws InterruptedException InterruptedException
      */
+    public final String receive(final String input)
+            throws IOException,
+            NoSuchFieldException,
+            AudioException,
+            EngineException,
+            PropertyVetoException,
+            InterruptedException {
+        String decoded = new Encoder().decode(input);
+        speechUtils.doSpeak(decoded);
+        return decoded;
+    }
+
     public final void blocksMethod()
             throws LineUnavailableException,
             InterruptedException,
@@ -92,8 +100,12 @@ public class Transmitter {
             IllegalAccessException {
         char[] pool = settings.getPool().toCharArray();
         StringBuilder randomCharacters = new StringBuilder();
-        for (int wordIndex = 0; wordIndex < settings.getBlocksStringsToSend(); wordIndex++) {
-            for (int charIndex = 0; charIndex < settings.getBlocksLengthOfStrings(); charIndex++) {
+        for (int wordIndex = 0;
+             wordIndex < settings.getBlocksStringsToSend();
+             wordIndex++) {
+            for (int charIndex = 0;
+                 charIndex < settings.getBlocksLengthOfStrings();
+                 charIndex++) {
                 char curr = pool[new Random().nextInt(pool.length)];
                 randomCharacters.append(curr);
             }
@@ -102,10 +114,6 @@ public class Transmitter {
         transmit(randomCharacters.toString());
     }
 
-    /**
-     * Get last transmitted string.
-     * @return last transmitted string
-     */
     public final String getTransmitted() {
         return transmitted;
     }

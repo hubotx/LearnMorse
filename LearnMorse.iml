@@ -24,6 +24,11 @@
     <orderEntry type="library" name="java" level="project" />
     <orderEntry type="library" name="Maven: junit:junit:4.12" level="project" />
     <orderEntry type="library" name="Maven: org.hamcrest:hamcrest-core:1.3" level="project" />
-    <orderEntry type="library" name="Maven: net.sf.sociaal:freetts:1.2.2" level="project" />
+    <orderEntry type="library" name="Maven: javax.speech:jsapi:1.0" level="project" />
+    <orderEntry type="library" name="Maven: org.mobicents.external.freetts:cmu_us_kal:1.0" level="project" />
+    <orderEntry type="library" name="Maven: org.mobicents.external.freetts:cmu_time_awb:1.0" level="project" />
+    <orderEntry type="library" name="Maven: org.mobicents.external.freetts:freetts:1.0" level="project" />
+    <orderEntry type="library" name="Maven: org.mobicents.external.freetts:en_us:1.0" level="project" />
+    <orderEntry type="library" name="Maven: org.mobicents.external.freetts:cmulex:1.0" level="project" />
   </component>
 </module>

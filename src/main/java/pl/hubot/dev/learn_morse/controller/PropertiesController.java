@@ -14,127 +14,37 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-/**
- * Controller class for resource view/Properties.fxml.
- */
 public class PropertiesController implements Initializable {
-    /**
-     * Pause before keying.
-     */
-    @FXML
-    private TextField pauseBeforeKeying;
+    @FXML private TextField pauseBeforeKeying;
+    @FXML private TextField keyingSpeed;
+    @FXML private TextField dotLength;
+    @FXML private TextField dashLength;
+    @FXML private TextField lengthOfSpaceBetweenCharacters;
+    @FXML private TextField lengthOfSpaceBetweenWords;
+    @FXML private TextField lengthOfSpaceBetweenCharElements;
+    @FXML private TextField frequency;
+    @FXML private TextField volume;
+    @FXML private ComboBox<String> charPool;
+    @FXML private Button closeButton;
+    @FXML private TextField lengthOfStrings;
+    @FXML private TextField numberOfStrings;
 
-    /**
-     * Keying speed.
-     */
-    @FXML
-    private TextField keyingSpeed;
-
-    /**
-     * Dot length.
-     */
-    @FXML
-    private TextField dotLength;
-
-    /**
-     * Dash length.
-     */
-    @FXML
-    private TextField dashLength;
-
-    /**
-     * Length of space between characters.
-     */
-    @FXML
-    private TextField lengthOfSpaceBetweenCharacters;
-
-    /**
-     * Length of space between words.
-     */
-    @FXML
-    private TextField lengthOfSpaceBetweenWords;
-
-    /**
-     * Length of space between char elements.
-     */
-    @FXML
-    private TextField lengthOfSpaceBetweenCharElements;
-
-    /**
-     * Frequency.
-     */
-    @FXML
-    private TextField frequency;
-
-    /**
-     * Volume.
-     */
-    @FXML
-    private TextField volume;
-
-    /**
-     * Character pool.
-     */
-    @FXML
-    private ComboBox<String> charPool;
-
-    /**
-     * Close button.
-     */
-    @FXML
-    private Button closeButton;
-
-    /**
-     * Length of strings to send (blocks method).
-     */
-    @FXML
-    private TextField lengthOfStrings;
-
-    /**
-     * Number of strings to send (blocks method).
-     */
-    @FXML
-    private TextField numberOfStrings;
-
-    /**
-     * Settings.
-     */
     private Settings settings = Settings.getInstance();
-
-    /**
-     * Maximum volume (100%).
-     */
     private final float maxVolume = 100.0f;
 
-    /**
-     * Constructor.
-     * @throws IllegalAccessException IllegalAccessException
-     * @throws NoSuchFieldException NoSuchFieldException
-     * @throws IOException IOException
-     */
     public PropertiesController()
             throws IllegalAccessException,
             NoSuchFieldException,
             IOException {
     }
 
-    /**
-     * Initialize controller.
-     *
-     * @param location location
-     * @param resources resources
-     */
     @Override
     public final void initialize(final URL location,
                                  final ResourceBundle resources) {
-            pauseBeforeKeying.setText(String.valueOf(
-                    settings.getPauseBeforeKeying()));
-            keyingSpeed.setText(String.valueOf(
-                    settings.getKeyingSpeed()));
-            dotLength.setText(String.valueOf(
-                    settings.getDotLength()));
-            dashLength.setText(String.valueOf(
-                    settings.getDashLength()));
+            pauseBeforeKeying.setText(String.valueOf(settings.getPauseBeforeKeying()));
+            keyingSpeed.setText(String.valueOf(settings.getKeyingSpeed()));
+            dotLength.setText(String.valueOf(settings.getDotLength()));
+            dashLength.setText(String.valueOf(settings.getDashLength()));
             lengthOfSpaceBetweenCharacters.setText(String.valueOf(
                     settings.getLengthOfSpaceBetweenCharacters()
                             / settings.getDotLength()));
@@ -145,77 +55,46 @@ public class PropertiesController implements Initializable {
                     settings.getLengthOfSpaceBetweenCharElements()
                             / settings.getDotLength()));
             frequency.setText(String.valueOf(settings.getFrequency()));
-            volume.setText(String.valueOf(
-                    Float.parseFloat(
+            volume.setText(String.valueOf(Float.parseFloat(
                             String.valueOf(settings.getVolume()
                                     * maxVolume))));
-            lengthOfStrings.setText(String.valueOf(
-                    settings.getBlocksLengthOfStrings()));
-            numberOfStrings.setText(String.valueOf(
-                    settings.getBlocksStringsToSend()));
+            lengthOfStrings.setText(String.valueOf(settings.getBlocksLengthOfStrings()));
+            numberOfStrings.setText(String.valueOf(settings.getBlocksStringsToSend()));
 
-            charPool.getItems().add(
-                    String.valueOf(CharPool.ENGLISH_SET));
-            charPool.getItems().add(
-                    String.valueOf(CharPool.POLISH_SET));
-            charPool.getItems().add(
-                    String.valueOf(CharPool.DIGITS));
-            charPool.getItems().add(
-                    String.valueOf(CharPool.ALPHANUMERIC));
-            charPool.getItems().add(
-                    String.valueOf(CharPool.POLISH_ALPHANUMERIC));
-            charPool.getItems().add(
-                    String.valueOf(CharPool.SYMBOLS));
-            charPool.getItems().add(
-                    String.valueOf(CharPool.FULL_CHARACTER_SET));
+            charPool.getItems().add(String.valueOf(CharPool.ENGLISH_SET));
+            charPool.getItems().add(String.valueOf(CharPool.POLISH_SET));
+            charPool.getItems().add(String.valueOf(CharPool.DIGITS));
+            charPool.getItems().add(String.valueOf(CharPool.ALPHANUMERIC));
+            charPool.getItems().add(String.valueOf(CharPool.POLISH_ALPHANUMERIC));
+            charPool.getItems().add(String.valueOf(CharPool.SYMBOLS));
+            charPool.getItems().add(String.valueOf(CharPool.FULL_CHARACTER_SET));
 
-            charPool.getSelectionModel()
-                    .select(String.valueOf(settings.getPool()));
-            pauseBeforeKeying.setText(String.valueOf(
-                    settings.getPauseBeforeKeying()));
-            keyingSpeed.setText(String.valueOf(
-                    settings.getKeyingSpeed()));
-            dotLength.setText(String.valueOf(
-                    settings.getDotLength()));
-            dashLength.setText(String.valueOf(
-                    settings.getDashLength()));
+            charPool.getSelectionModel().select(String.valueOf(settings.getPool()));
+            pauseBeforeKeying.setText(String.valueOf(settings.getPauseBeforeKeying()));
+            keyingSpeed.setText(String.valueOf(settings.getKeyingSpeed()));
+            dotLength.setText(String.valueOf(settings.getDotLength()));
+            dashLength.setText(String.valueOf(settings.getDashLength()));
             lengthOfSpaceBetweenCharacters.setText(String.valueOf(
-                    settings.getLengthOfSpaceBetweenCharacters()
-                            / settings.getDotLength()));
+                    settings.getLengthOfSpaceBetweenCharacters() / settings.getDotLength()));
             lengthOfSpaceBetweenWords.setText(String.valueOf(
-                    settings.getLengthOfSpaceBetweenWords()
-                            / settings.getDotLength()));
+                    settings.getLengthOfSpaceBetweenWords() / settings.getDotLength()));
             lengthOfSpaceBetweenCharElements.setText(String.valueOf(
-                    settings.getLengthOfSpaceBetweenCharElements()
-                            / settings.getDotLength()));
+                    settings.getLengthOfSpaceBetweenCharElements() / settings.getDotLength()));
             frequency.setText(String.valueOf(settings.getFrequency()));
-            volume.setText(String.valueOf(
-                    Float.parseFloat(
-                            String.valueOf(settings.getVolume()
-                                    * maxVolume))));
+            volume.setText(String.valueOf(Float.parseFloat(
+                            String.valueOf(settings.getVolume() * maxVolume))));
 
-            charPool.getItems().add(
-                    String.valueOf(CharPool.ENGLISH_SET));
-            charPool.getItems().add(
-                    String.valueOf(CharPool.POLISH_SET));
-            charPool.getItems().add(
-                    String.valueOf(CharPool.DIGITS));
-            charPool.getItems().add(
-                    String.valueOf(CharPool.ALPHANUMERIC));
-            charPool.getItems().add(
-                    String.valueOf(CharPool.POLISH_ALPHANUMERIC));
-            charPool.getItems().add(
-                    String.valueOf(CharPool.SYMBOLS));
-            charPool.getItems().add(
-                    String.valueOf(CharPool.FULL_CHARACTER_SET));
+            charPool.getItems().add(String.valueOf(CharPool.ENGLISH_SET));
+            charPool.getItems().add(String.valueOf(CharPool.POLISH_SET));
+            charPool.getItems().add(String.valueOf(CharPool.DIGITS));
+            charPool.getItems().add(String.valueOf(CharPool.ALPHANUMERIC));
+            charPool.getItems().add(String.valueOf(CharPool.POLISH_ALPHANUMERIC));
+            charPool.getItems().add(String.valueOf(CharPool.SYMBOLS));
+            charPool.getItems().add(String.valueOf(CharPool.FULL_CHARACTER_SET));
 
-            charPool.getSelectionModel()
-                    .select(String.valueOf(settings.getPool()));
+            charPool.getSelectionModel().select(String.valueOf(settings.getPool()));
     }
 
-    /**
-     * Cancel editing properties.
-     */
     public final void cancel() {
         // get a handle to the stage
         Stage stage = (Stage) closeButton.getScene().getWindow();
@@ -223,9 +102,6 @@ public class PropertiesController implements Initializable {
         stage.close();
     }
 
-    /**
-     * Apply changes.
-     */
     public final void ok() {
         try {
             // set properties
