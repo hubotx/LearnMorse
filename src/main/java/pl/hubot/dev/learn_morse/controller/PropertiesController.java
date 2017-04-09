@@ -85,6 +85,18 @@ public class PropertiesController implements Initializable {
     private Button closeButton;
 
     /**
+     * Length of strings to send (blocks method).
+     */
+    @FXML
+    private TextField lengthOfStrings;
+
+    /**
+     * Number of strings to send (blocks method).
+     */
+    @FXML
+    private TextField numberOfStrings;
+
+    /**
      * Settings.
      */
     private Settings settings = Settings.getInstance();
@@ -137,6 +149,10 @@ public class PropertiesController implements Initializable {
                     Float.parseFloat(
                             String.valueOf(settings.getVolume()
                                     * maxVolume))));
+            lengthOfStrings.setText(String.valueOf(
+                    settings.getBlocksLengthOfStrings()));
+            numberOfStrings.setText(String.valueOf(
+                    settings.getBlocksStringsToSend()));
 
             charPool.getItems().add(
                     String.valueOf(CharPool.ENGLISH_SET));
@@ -242,6 +258,10 @@ public class PropertiesController implements Initializable {
                     volume.getText()) / maxVolume);
             settings.setPool(charPool.getSelectionModel()
                     .getSelectedItem());
+            settings.setBlocksLengthOfStrings(
+                    Integer.parseInt(lengthOfStrings.getText()));
+            settings.setBlocksStringsToSend(
+                    Integer.parseInt(numberOfStrings.getText()));
             settings.apply();
         } catch (IllegalAccessException | NumberFormatException ex) {
             ErrorHandler.handleException(ex);

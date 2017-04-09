@@ -92,10 +92,8 @@ public class Transmitter {
             IllegalAccessException {
         char[] pool = settings.getPool().toCharArray();
         StringBuilder randomCharacters = new StringBuilder();
-        final byte words = 5;
-        final byte chars = 4;
-        for (int wordIndex = 0; wordIndex < words; wordIndex++) {
-            for (int charIndex = 0; charIndex < chars; charIndex++) {
+        for (int wordIndex = 0; wordIndex < settings.getBlocksStringsToSend(); wordIndex++) {
+            for (int charIndex = 0; charIndex < settings.getBlocksLengthOfStrings(); charIndex++) {
                 char curr = pool[new Random().nextInt(pool.length)];
                 randomCharacters.append(curr);
             }
