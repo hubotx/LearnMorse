@@ -16,7 +16,21 @@ public class Transmitter {
      */
     private Settings settings = Settings.getInstance();
 
-    public Transmitter() throws IllegalAccessException, NoSuchFieldException, IOException {
+    /**
+     * Last transmitted string.
+     */
+    private String transmitted;
+
+    /**
+     * Constructor.
+     * @throws IllegalAccessException IllegalAccessException
+     * @throws NoSuchFieldException NoSuchFieldException
+     * @throws IOException IOException
+     */
+    public Transmitter()
+            throws IllegalAccessException,
+            NoSuchFieldException,
+            IOException {
     }
 
     /**
@@ -90,9 +104,11 @@ public class Transmitter {
         transmit(randomCharacters.toString());
     }
 
-    public String getTransmitted() {
+    /**
+     * Get last transmitted string.
+     * @return last transmitted string
+     */
+    public final String getTransmitted() {
         return transmitted;
     }
-
-    private String transmitted;
 }

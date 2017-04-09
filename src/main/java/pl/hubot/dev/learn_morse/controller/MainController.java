@@ -9,10 +9,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
+
 import pl.hubot.dev.learn_morse.model.Transmitter;
 import pl.hubot.dev.learn_morse.util.ErrorHandler;
 import pl.hubot.dev.learn_morse.model.Encoder;
-import pl.hubot.dev.learn_morse.util.Settings;
 
 import javax.sound.sampled.LineUnavailableException;
 import java.io.IOException;
@@ -36,22 +36,20 @@ public class MainController implements Initializable {
     @FXML private TextArea txtOutput;
 
     /**
-     * Application settings.
-     */
-    private Settings settings;
-
-    /**
      * Transmitter.
      */
     private Transmitter transmitter;
 
     /**
      * Initialize controller.
+     *
+     * @param location location
+     * @param resources resources
      */
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public final void initialize(final URL location,
+                                 final ResourceBundle resources) {
         try {
-            settings = Settings.getInstance();
             transmitter = new Transmitter();
         } catch (IllegalAccessException
                 | NoSuchFieldException
@@ -111,28 +109,27 @@ public class MainController implements Initializable {
                 ErrorHandler.handleException(ex);
             }
         });
-        executor.execute(() -> {
-            Platform.runLater(() -> {
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Are you ready?");
-                alert.setContentText("Click OK to verify.");
+        executor.execute(() -> Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Are you ready?");
+            alert.setContentText("Click OK to verify.");
+            alert.showAndWait();
+            if (txtInput.getText().equals(transmitter.getTransmitted())) {
+                alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setHeaderText("Success");
+                alert.setContentText("You're right!");
                 alert.showAndWait();
-                if (txtInput.getText().equals(transmitter.getTransmitted())) {
-                    alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setHeaderText("Success");
-                    alert.setContentText("You're right!");
-                    alert.showAndWait();
-                } else {
-                    alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setHeaderText("Fail");
-                    alert.setContentText("You failed!");
-                    alert.showAndWait();
-                }
-            });
-        });
+            } else {
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setHeaderText("Fail");
+                alert.setContentText("You failed!");
+                alert.showAndWait();
+            }
+        }));
         executor.shutdown();
+        final int millis = 100;
         try {
-            Thread.sleep(100);
+            Thread.sleep(millis);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

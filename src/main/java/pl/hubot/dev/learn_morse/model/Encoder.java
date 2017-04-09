@@ -1,11 +1,12 @@
 package pl.hubot.dev.learn_morse.model;
 
-import pl.hubot.dev.learn_morse.util.Settings;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Properties;
 
 /**
  * Encoder class.
@@ -90,35 +91,6 @@ public class Encoder {
         }
     }
 
-    public int getLengthOfEncoded(final String input) throws IOException, NoSuchFieldException, IllegalAccessException {
-        Settings settings = Settings.getInstance();
-        int lengthOfEncoded = 0;
-        String lowerCaseInput = input.toLowerCase();
-        for (int i = 0; i < lowerCaseInput.length(); i++) {
-            char current = lowerCaseInput.charAt(i);
-            Map<String, String> morseCode =
-                    new Encoder().getMorseCode();
-            String encodedCharacter = morseCode
-                    .getOrDefault(Character.toString(
-                            current), "");
-            for (int j = 0; j < encodedCharacter.length(); j++) {
-                char currentEnc = encodedCharacter.charAt(j);
-                if (currentEnc == '_') {
-                    lengthOfEncoded += 1200 * settings.getDashLength() / settings.getKeyingSpeed();
-                } else if (currentEnc == '.') {
-                    lengthOfEncoded += 1200 * settings.getDotLength() / settings.getDashLength();
-                }
-                lengthOfEncoded += settings.getLengthOfSpaceBetweenCharElements();
-            }
-            lengthOfEncoded += settings.getLengthOfSpaceBetweenCharacters();
-
-            if (current == ' ') {
-                lengthOfEncoded += settings.getLengthOfSpaceBetweenWords();
-            }
-        }
-        return lengthOfEncoded;
-    }
-
     /**
      * Helper method provided to getting keys by value.
      *
@@ -128,7 +100,7 @@ public class Encoder {
      * @param <E>   type of value
      * @return keys by value
      */
-    private <T, E> T getKeysByValue(Map<T, E> map, E value) {
+    private <T, E> T getKeysByValue(final Map<T, E> map, final E value) {
         for (Map.Entry<T, E> entry : map.entrySet()) {
             if (Objects.equals(value, entry.getValue())) {
                 return entry.getKey();

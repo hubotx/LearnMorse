@@ -92,7 +92,7 @@ public class PropertiesController implements Initializable {
     /**
      * Maximum volume (100%).
      */
-    private float maxVolume = 100.0f;
+    private final float maxVolume = 100.0f;
 
     /**
      * Constructor.
@@ -100,14 +100,21 @@ public class PropertiesController implements Initializable {
      * @throws NoSuchFieldException NoSuchFieldException
      * @throws IOException IOException
      */
-    public PropertiesController() throws IllegalAccessException, NoSuchFieldException, IOException {
+    public PropertiesController()
+            throws IllegalAccessException,
+            NoSuchFieldException,
+            IOException {
     }
 
     /**
      * Initialize controller.
+     *
+     * @param location location
+     * @param resources resources
      */
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public final void initialize(final URL location,
+                                 final ResourceBundle resources) {
             pauseBeforeKeying.setText(String.valueOf(
                     settings.getPauseBeforeKeying()));
             keyingSpeed.setText(String.valueOf(

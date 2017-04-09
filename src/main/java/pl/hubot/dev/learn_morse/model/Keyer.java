@@ -36,7 +36,7 @@ public class Keyer {
      * @throws LineUnavailableException sound(...) method
      * @throws InterruptedException     Thread.sleep(...) method
      */
-    void dash() throws LineUnavailableException, InterruptedException {
+    final void dash() throws LineUnavailableException, InterruptedException {
         tone(settings.getDashLength());
         pauseCharElement();
     }
@@ -47,7 +47,7 @@ public class Keyer {
      * @throws LineUnavailableException sound(...) method
      * @throws InterruptedException     Thread.sleep(...) method
      */
-    void dot() throws LineUnavailableException, InterruptedException {
+    final void dot() throws LineUnavailableException, InterruptedException {
         tone(settings.getDotLength());
         pauseCharElement();
     }
@@ -57,7 +57,7 @@ public class Keyer {
      *
      * @throws InterruptedException Thread.sleep(...) method
      */
-    void pauseBeforeKeying() throws InterruptedException {
+    final void pauseBeforeKeying() throws InterruptedException {
         Thread.sleep(settings.getPauseBeforeKeying());
     }
 
@@ -75,7 +75,7 @@ public class Keyer {
      *
      * @throws InterruptedException Thread.sleep(...) method
      */
-    void pauseChar() throws InterruptedException {
+    final void pauseChar() throws InterruptedException {
         Thread.sleep(settings.getLengthOfSpaceBetweenCharacters());
     }
 
@@ -84,7 +84,7 @@ public class Keyer {
      *
      * @throws InterruptedException Thread.sleep(...) method
      */
-    void pauseWord() throws InterruptedException {
+    final void pauseWord() throws InterruptedException {
         Thread.sleep(settings.getLengthOfSpaceBetweenWords());
     }
 
@@ -94,7 +94,7 @@ public class Keyer {
      * @param duration duration
      * @throws LineUnavailableException LineUnavailableException
      */
-    public void tone(final int duration) throws LineUnavailableException {
+    private void tone(final int duration) throws LineUnavailableException {
         byte[] buffer = new byte[duration * Byte.SIZE];
         final int samplingFrequencyInHz = 8000;
         for (int i = 0; i < buffer.length; i++) {
