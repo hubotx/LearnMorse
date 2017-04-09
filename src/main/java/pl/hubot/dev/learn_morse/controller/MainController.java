@@ -110,6 +110,12 @@ public class MainController implements Initializable {
             }
         });
         executor.execute(() -> Platform.runLater(() -> {
+            final int delay = 3000;
+            try {
+                Thread.sleep(delay);
+            } catch (InterruptedException e) {
+                ErrorHandler.handleException(e);
+            }
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Are you ready?");
             alert.setContentText("Click OK to verify.");
