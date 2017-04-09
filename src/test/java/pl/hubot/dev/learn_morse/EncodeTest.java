@@ -6,13 +6,7 @@ import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
 
-/**
- * Encode test.
- */
 public class EncodeTest {
-    /**
-     * Test case #1: encoding.
-     */
     @Test
     public final void testEncode() {
         final String expectedResult =
@@ -29,9 +23,6 @@ public class EncodeTest {
         }
     }
 
-    /**
-     * Test case #2: decoding.
-     */
     @Test
     public final void testDecode() {
         final String expectedResult =
