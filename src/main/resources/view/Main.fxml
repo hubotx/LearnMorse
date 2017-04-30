@@ -7,23 +7,21 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane prefHeight="400.0" prefWidth="600.0" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.hubot.dev.learn_morse.controller.MainController">
+<BorderPane prefHeight="400.0" prefWidth="600.0" styleClass="background" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.hubot.dev.learn_morse.controller.MainController">
    <top>
        <MenuBar BorderPane.alignment="CENTER">
            <Menu mnemonicParsing="false" text="File">
                <MenuItem mnemonicParsing="false" onAction="#changeProperties" text="Properties" />
                <MenuItem mnemonicParsing="false" text="Close" />
            </Menu>
-           <Menu mnemonicParsing="false" text="Edit">
-               <MenuItem mnemonicParsing="false" text="Delete" />
-           </Menu>
            <Menu mnemonicParsing="false" text="Procedures">
                <MenuItem mnemonicParsing="false" onAction="#transmit" text="Transmit" />
                <MenuItem mnemonicParsing="false" onAction="#receive" text="Receive" />
-               <MenuItem mnemonicParsing="false" onAction="#train" text="Blocks method" />
+               <MenuItem mnemonicParsing="false" onAction="#trainUsingBlocksMethod" text="Blocks method" />
+            <MenuItem mnemonicParsing="false" onAction="#trainUsingKochMethod" text="Koch method" />
            </Menu>
            <Menu mnemonicParsing="false" text="Help">
-               <MenuItem mnemonicParsing="false" text="About" />
+               <MenuItem mnemonicParsing="false" onAction="#displayAbout" text="About" />
            </Menu>
        </MenuBar>
    </top>

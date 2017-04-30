@@ -1,6 +1,5 @@
 package pl.hubot.dev.learn_morse.model;
 
-import pl.hubot.dev.learn_morse.util.ErrorHandler;
 import pl.hubot.dev.learn_morse.util.Settings;
 import pl.hubot.dev.learn_morse.util.SpeechUtils;
 
@@ -15,25 +14,11 @@ import java.util.Random;
 public class Transceiver {
     private Settings settings = Settings.getInstance();
     private String transmitted;
-    private SpeechUtils speechUtils = new SpeechUtils();
 
     public Transceiver()
             throws IllegalAccessException,
             NoSuchFieldException,
-            IOException,
-            AudioException,
-            EngineException,
-            PropertyVetoException {
-        speechUtils.init();
-    }
-
-    @Override
-    public final void finalize() {
-        try {
-            speechUtils.terminate();
-        } catch (EngineException ex) {
-            ErrorHandler.handleException(ex);
-        }
+            IOException {
     }
 
     public final void transmit(final String input)
@@ -88,7 +73,10 @@ public class Transceiver {
             PropertyVetoException,
             InterruptedException {
         String decoded = new Encoder().decode(input);
+        SpeechUtils speechUtils = new SpeechUtils();
+        speechUtils.init();
         speechUtils.doSpeak(decoded);
+        speechUtils.terminate();
         return decoded;
     }
 
@@ -112,6 +100,26 @@ public class Transceiver {
             randomCharacters.append(' ');
         }
         transmit(randomCharacters.toString());
+    }
+
+    public final void kochMethod()
+            throws InterruptedException,
+            NoSuchFieldException,
+            LineUnavailableException,
+            IllegalAccessException,
+            IOException {
+        int oldKeyingSpeed = settings.getKeyingSpeed();
+        settings.setKeyingSpeed(20);
+        char[] pool = settings.getPool().toCharArray();
+        StringBuilder randomCharacters = new StringBuilder();
+        for (int charIndex = 0;
+             charIndex < settings.getKochCharsToSend();
+             charIndex++) {
+            char curr = pool[new Random().nextInt(pool.length)];
+            randomCharacters.append(curr);
+        }
+        transmit(randomCharacters.toString());
+        settings.setKeyingSpeed(oldKeyingSpeed);
     }
 
     public final String getTransmitted() {
