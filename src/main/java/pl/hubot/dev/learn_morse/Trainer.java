@@ -2,39 +2,39 @@ package pl.hubot.dev.learn_morse;
 
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
+import javafx.scene.control.TextArea;
 import pl.hubot.dev.learn_morse.model.Transceiver;
 import pl.hubot.dev.learn_morse.util.ErrorHandler;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public abstract class Trainer {
     public abstract void train();
 
-    public final void verifySkills(String input) {
+    public final void verifySkills(final TextArea input) {
         executor.execute(() -> Platform.runLater(() -> {
-            final int delay = 3000;
-            try {
-                Thread.sleep(delay);
-            } catch (InterruptedException e) {
-                ErrorHandler.handleException(e);
-            }
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Are you ready?");
             alert.setContentText("Click OK to verify.");
             alert.showAndWait();
-            if (input.equals(transceiver.getTransmitted())) {
-                alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setHeaderText("Success");
-                alert.setContentText("You're right!");
-                alert.showAndWait();
-            } else {
-                alert = new Alert(Alert.AlertType.ERROR);
-                alert.setHeaderText("Fail");
-                alert.setContentText("You failed!");
-                alert.showAndWait();
+            List<Character> passedCharacters = new ArrayList<>();
+            char[] allCharacters = transceiver.getTransmitted().toCharArray();
+            for (int i = 0; i < input.getText().length(); i++) {
+                char curr = input.getText().charAt(i);
+                if (curr == allCharacters[i]) {
+                    passedCharacters.add(curr);
+                }
             }
+            float passedPercent = 100.0f * passedCharacters.size() / allCharacters.length;
+            System.out.println(passedCharacters);
+            alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText("Results");
+            alert.setContentText("You have passed training with result " + passedPercent + "%.");
+            alert.showAndWait();
         }));
         executor.shutdown();
     }

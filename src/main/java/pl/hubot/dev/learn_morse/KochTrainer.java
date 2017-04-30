@@ -12,6 +12,7 @@ public class KochTrainer extends Trainer {
         executor.execute(() -> {
             try {
                 transceiver.kochMethod();
+                Thread.sleep(3000);
             } catch (LineUnavailableException
                     | NoSuchFieldException
                     | IOException

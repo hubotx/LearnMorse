@@ -77,13 +77,13 @@ public class MainController implements Initializable {
     public final void trainUsingBlocksMethod() {
         Trainer trainer = new BlocksTrainer();
         trainer.train();
-        trainer.verifySkills(txtInput.getText());
+        trainer.verifySkills(txtInput);
     }
 
     public final void trainUsingKochMethod() {
         Trainer trainer = new KochTrainer();
         trainer.train();
-        trainer.verifySkills(txtInput.getText());
+        trainer.verifySkills(txtInput);
     }
 
     public final void changeProperties() throws IOException {

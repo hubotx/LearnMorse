@@ -109,7 +109,7 @@ public class Transceiver {
             IllegalAccessException,
             IOException {
         int oldKeyingSpeed = settings.getKeyingSpeed();
-        settings.setKeyingSpeed(20);
+        settings.setKeyingSpeed(4);
         char[] pool = settings.getPool().toCharArray();
         StringBuilder randomCharacters = new StringBuilder();
         for (int charIndex = 0;
